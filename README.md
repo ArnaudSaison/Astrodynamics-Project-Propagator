@@ -18,3 +18,20 @@
 **Authors**: Antoine Montuzet, Arnaud Saison \
 **Academic year**: 2022-2023 \
 **Course**: AERO0024-1 Astrodynamics
+
+Essential Tasks
+- [ ] résoudre équation du mouvement
+    - [ ] trouver un solver adéquat
+    - [ ] visualisation avec code du prof 
+    - [ ] tests avec iss
+    - [ ] conversions
+- [ ] ajouter contribution J2
+- [ ] test avec un autre satellite (Hubble)
+
+Optional Tasks
+- [ ] ajouter d'autres contributions que J2
+- [ ] visualisation 3D
+
+Question
+- Quelles fonctions MATLAB est-ce qu'on peut utiliser ?
+- Est-ce qu'il faut une visualisation 3D ?
