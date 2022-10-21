@@ -5,6 +5,8 @@ close all
 earth_radius = earthRadius/1000;
 earth_mu = 398600;
 
+% [r0, v0] = tle2eci(TLEISS);
+
 % initial condition of orbit parameters
 r_mag = earth_radius + 414;       % km
 v_mag = sqrt(earth_mu/r_mag);     % km/s
@@ -30,4 +32,9 @@ toc
 
 % Plot earth and orbit
 plot_3D(earth_radius,stateout);
+
+xout = stateout(:,1);
+yout = stateout(:,2);
+zout = stateout(:,3);
+grdtrk([xout*1000,yout*1000,zout*1000]);
 
