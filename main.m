@@ -28,14 +28,29 @@
 % User Manual: Please see README.md
 % 
 % Structure:
-%   propagator
-%   utils
-%       fig2pdf.m       converts figure to pdf
-% 
+%   propagator/
+%       matlab/
+%           diffEq.m            differential equation
+%           plot_3D.m           represents solution in 3D
+%           processParam.m      processes and groups parameters
+%           propagator.m        solves the equation of motion
+%       python/
+%   utils/
+%       fig2pdf.m               converts figure to pdf
 % 
 % =========================================================================
 
 %% Setting up path
 restoredefaultpath
-addpath(genpath('.'));
-clc; close all; clear;
+addpath(genpath('.'));      % setting up path
+clc; close all; clear;      % cleaning up
+
+%% Parameters
+par = parameters();         % user parameters
+par = processParam(par);    % processing parameters
+
+%% Propagating
+[time, statesout] = propagator(par);
+
+%% Representing
+plot_3D(par.pdata.earth.radius/1000, statesout/1000);

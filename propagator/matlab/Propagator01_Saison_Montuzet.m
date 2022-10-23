@@ -25,9 +25,10 @@ state0 = [r0,v0];
 opts = odeset("RelTol",1e-13,"AbsTol",1e-15,"Stats","on");
 
 tic
-[tout,stateout] = ode78(@propagator,tspan,state0,opts);
+[tout,stateout] = ode78(@(t, y) diffEq(t, y, earth_mu), tspan, state0, opts);
 toc
 
 % Plot earth and orbit
 plot_3D(earth_radius,stateout);
+axis equal;
 

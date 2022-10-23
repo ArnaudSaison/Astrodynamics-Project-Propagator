@@ -17,4 +17,5 @@ function plot_3D(earth_radius,stateout)
     grid on
     hold on
     surf(X,Y,Z,'EdgeColor','none')
+    axis equal;
 end
