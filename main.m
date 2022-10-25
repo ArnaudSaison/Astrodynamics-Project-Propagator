@@ -26,6 +26,9 @@
 %   against the real trajectory of a satellite in low Earth orbit."
 % 
 % User Manual: Please see README.md
+%
+% Minimum requirements: 
+%   - Aerospace Toolbox
 % 
 % Structure:
 %   propagator/
@@ -53,4 +56,4 @@ par = processParam(par);    % processing parameters
 [time, statesout] = propagator(par);
 
 %% Representing
-plot_3D(par.pdata.earth.radius/1000, statesout/1000);
+plot_3D(par.pdata.earth.radius, statesout);

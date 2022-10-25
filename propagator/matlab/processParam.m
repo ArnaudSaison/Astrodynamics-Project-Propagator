@@ -11,13 +11,22 @@ function parOUT = processParam(parIN)
 % 
 
 % User parameters
-parOUT = parIN; % copy user parameters
+par = parIN; % copy user parameters
+
+% Add physical constants and data (used later in the function)
+par.pdata = planetaryData();
 
 % Create derived variables
-parOUT.tspan = linspace(0, parIN.N_STEP, parIN.T_END);
-[parOUT.TLE parOUT.states] = processTLE(parIN.TLE);
+par.tspan = linspace(0, par.T_END, par.N_STEP);
+[par.TLE.processed, par.Orb_elem0, par.ECI0] = processTLE(par);
 
-% Add physical constants and data
-parOUT.pdata = planetaryData();
+% Dev
+if par.DEBUG
+    par.displ_stats = 'on';
+else
+    par.displ_stats = 'off';
+end
+
+parOUT = par;
 
 end
