@@ -17,8 +17,8 @@ par.DRAG = 0;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
 par.TLE.L0 = 'ISS (ZARYA)';
-par.TLE.L1 = '1 25544U 98067A   22298.70251956  .00092330  00000+0  16374-2 0  9997';
-par.TLE.L2 = '2 25544  51.6431  50.0017 0005670   3.9708 141.4403 15.49452998365423';
+par.TLE.L1 = '1 25544U 98067A   22299.66947022  .00009002  00000-0  16874-3 0  9990';
+par.TLE.L2 = '2 25544  51.6437  45.2136 0005899   6.4495 136.1177 15.49438895365576';
 
 % Object properties
 par.prop.MASS = 410500;         % [kg] mass of object

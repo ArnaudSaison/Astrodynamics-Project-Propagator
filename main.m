@@ -51,9 +51,10 @@ clc; close all; clear;      % cleaning up
 %% Parameters
 par = parameters();         % user parameters
 par = processParam(par);    % processing parameters
+dispParam(par);
 
 %% Propagating
-[time, statesout] = propagator(par);
+[time, ECI] = propagator(par);
 
 %% Representing
-plot_3D(par.pdata.earth.radius, statesout);
+plotOrbit(par, time, ECI)

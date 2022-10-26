@@ -8,18 +8,14 @@ function [TLE, elem, ECI] = processTLE(par)
 %
 % Output:
 %   TLE = structure containing all values found in the TLE
-%   elem = structure with fields
-%       ECI = [x, y, z, x_dot, y_dot, z_dot]
-%       name = str of object name
-%       ID = str of object ID
-%       internat_ID = str of international ID
-%       epoch = [launch_year, fractional_launch_day]
-%       classi = char of classification
-%       
+%   elem = structure with fields described below
 %       
 %
 
 %% Processing TLE
+% Name
+TLE.name = par.TLE.L0;
+
 % Catalog ID
 TLE.catalog_nb = str2double(par.TLE.L1(3:7));
 
@@ -29,7 +25,14 @@ TLE.classification = par.TLE.L1(8);
 % Launch year
 TLE.launch_year = str2double(par.TLE.L1(10:11));
 
+if TLE.launch_year > 57
+    TLE.launch_year = TLE.launch_year + 1900;
+else
+    TLE.launch_year = TLE.launch_year + 2000;
+end
+
 % Epoch
+TLE.epoch = str2double(par.TLE.L1(19:32));
 TLE.epoch_year = str2double(par.TLE.L1(19:20));
 TLE.epoch_day = str2double(par.TLE.L1(21:32));
 
@@ -69,5 +72,50 @@ elem.orbit_nb_epoch = str2double(par.TLE.L2(64:68));
 [r_ijk, v_ijk] = keplerian2ijk(elem.a, elem.ecc, elem.i, elem.RAAN, elem.omega, elem.theta);
 
 ECI = [r_ijk', v_ijk'];
+
+%% Time conversion
+%
+% MATLAB is a bit frustrating with time and dates, so I first tried
+% converting manually, but I found conflicting information on the actual
+% conversion and wasn't sure it was correct. So I tried another method
+% which ended up being way more simple, and more importantly, reliable.
+%
+%
+%
+%
+% year = TLE.epoch_year; % 
+% day_of_year = floor(TLE.epoch_day); % non decimal part is day
+% 
+% decimal_day = TLE.epoch_day - day_of_year; % decimal part of the day
+% 
+% hh = floor(decimal_day * 24); % hours
+% mm = floor((decimal_day * 24 - hh) * 60); % minutes
+% ss = floor(((decimal_day * 24 - hh) * 60 - mm) * 60); % seconds
+% 
+% end_of_month_day = eomday(year, 1:12); % number of days in each month for spacified year
+% 
+% temp = cumsum(end_of_month_day); % last day of each month in day of year format
+% month = find(temp >= day_of_year, 1); % first month that has 
+% 
+% temp = temp(month) - day_of_year;
+% date = end_of_month_day(month) - temp;
+% 
+% elem.utc = [year, month, date, hh, mm, ss];
+
+
+% juliandate where month is set to 0 to force matlab to convert only the 
+% year + days and decimals
+jd = juliandate(TLE.epoch_year, 0, TLE.epoch_day);
+
+% Conversion to datetime object which can be easily used afterwards
+dt = datetime(jd, 'ConvertFrom', 'juliandate', 'TimeZone', 'UTC');
+
+% Conversion to vector
+vec = datevec(dt); % [Y,M,D,H,MN,S]
+
+% conversion to date vector
+elem.utc_vec = vec;
+elem.utc_jd = jd;
+
 
 end
