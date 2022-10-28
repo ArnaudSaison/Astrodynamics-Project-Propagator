@@ -13,7 +13,7 @@ function par = parameters()
 % - J2: enables the J2 perturbation
 % - drag: enables drag
 par.ENABLE_J2 = 1;
-par.DRAG = 0;
+par.ENABLE_DRAG = 0;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
 par.TLE.L0 = 'ISS (ZARYA)';
@@ -26,7 +26,7 @@ par.prop.CD = 2.00;             % [-] drag coefficient of the object
 par.prop.A = 1641;              % [m^2] object area
 
 % Simulation parameters
-par.N_STEP = 10000;              % [#] number of step in the simulation
+par.N_STEP = 30000;              % [#] number of step in the simulation
 par.T_END = 10*24*3600;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-13;            % [?] relative tolerance
 par.ABS_TOL = 1e-15;            % [?] absolute tolerance

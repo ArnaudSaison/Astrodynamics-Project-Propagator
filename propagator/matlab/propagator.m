@@ -17,5 +17,3 @@ opts = odeset("RelTol", par.REL_TOL, "AbsTol", par.ABS_TOL, "Stats", par.displ_s
 tic
 [tout, stateout] = ode78(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
 toc
-
-end

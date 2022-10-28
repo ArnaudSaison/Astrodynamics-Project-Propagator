@@ -1,4 +1,4 @@
-function [] = plotOrbit(par, time, ECI)
+function [ECEF] = plotOrbit(par, time, ECI)
 % PLOTORBIT Represents the orbit in different ways
 %   
 
@@ -14,11 +14,15 @@ if par.DEBUG
     disp('Converting result to ECEF... (this operation is very slow)')
 end
 
+tic
 for i = 1:size(vec, 1)
      [r, v] = eci2ecef(vec(i,:), ECI(i,1:3), ECI(i,4:6));
      ECEF(i,:) = [r', v']; % contains both position and velocity
 end
+toc
 
+
+%% Using the groundtrack function
 grdtrk(ECEF(:,1:3));
 
 end

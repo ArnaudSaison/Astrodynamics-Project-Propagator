@@ -57,4 +57,4 @@ dispParam(par);
 [time, ECI] = propagator(par);
 
 %% Representing
-plotOrbit(par, time, ECI)
+ECEF = plotOrbit(par, time, ECI);
