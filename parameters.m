@@ -27,7 +27,7 @@ par.prop.A = 1641;              % [m^2] object area
 
 % Simulation parameters
 par.N_STEP = 1000;              % [#] number of step in the simulation
-par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
+par.T_END = 93*60;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-13;            % [?] relative tolerance
 par.ABS_TOL = 1e-15;            % [?] absolute tolerance
 

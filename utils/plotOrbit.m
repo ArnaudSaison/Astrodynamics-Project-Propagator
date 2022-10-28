@@ -19,10 +19,6 @@ for i = 1:size(vec, 1)
      ECEF(i,:) = [r', v']; % contains both position and velocity
 end
 
-if par.DEBUG
-    ECEF
-end
-
 grdtrk(ECEF(:,1:3));
 
 end

@@ -60,6 +60,7 @@ legend([inizio, fine], 'Start', 'End');
 title('Ground track');
 set(gca, 'xtick', -180 : 60 : 180, 'ytick', -90 : 30 : 90);
 hold off;
+axis equal;
 
 return
 

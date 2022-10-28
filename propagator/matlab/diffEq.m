@@ -1,4 +1,4 @@
-function dqdt = diffEq(t,state, mu)
+function dqdt = diffEq(t, state, mu)
 % DIFFEQ represents the differencial equation to solve
 %   state = [x, y, z, x_dot, y_dot, z_dot]
 % 
