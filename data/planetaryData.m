@@ -26,6 +26,7 @@ earth.radius = 6378.0e3;            % [m] radius
 % earth.radius = 6378.0e0;            % [km] radius
 earth.J2 = 1.082635854e-3;          % 
 
+
 % output
 pdata.earth = earth;
 pdata.sun = sun;

@@ -11,7 +11,7 @@ dt = datetime(time_jd, 'ConvertFrom', 'juliandate', 'TimeZone', 'UTC'); % to UTC
 vec = datevec(dt); % eci2ecef only takes vectors
 
 if par.DEBUG
-    disp('Converting result to ECEF:')
+    disp('Converting result to ECEF... (this operation is very slow)')
 end
 
 for i = 1:size(vec, 1)

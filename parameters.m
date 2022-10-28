@@ -12,7 +12,7 @@ function par = parameters()
 % Enable (1) / Disable (0) functionalities
 % - J2: enables the J2 perturbation
 % - drag: enables drag
-par.J2 = 1;
+par.ENABLE_J2 = 1;
 par.DRAG = 0;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
@@ -26,8 +26,8 @@ par.prop.CD = 2.00;             % [-] drag coefficient of the object
 par.prop.A = 1641;              % [m^2] object area
 
 % Simulation parameters
-par.N_STEP = 1000;              % [#] number of step in the simulation
-par.T_END = 93*60;          % [s] number of seconds in the simulation
+par.N_STEP = 10000;              % [#] number of step in the simulation
+par.T_END = 10*24*3600;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-13;            % [?] relative tolerance
 par.ABS_TOL = 1e-15;            % [?] absolute tolerance
 
