@@ -16,7 +16,16 @@ function dqdt = diffEq(t, state, par)
     % J2 component (if activated)
     if par.ENABLE_J2
         temp1 = (5 * (r(3)/norm_r).^2 - 1)/norm_r^3;
-        acc = acc + 3/2 * mu * par.pdata.earth.J2 * (par.pdata.earth.radius/norm_r)^2 * r .* [temp1; temp1; temp1 - 2/norm_r^3];
+        J2 = 3/2 * mu * par.pdata.earth.J2 * (par.pdata.earth.radius/norm_r)^2 * r .* [temp1; temp1; temp1 - 2/norm_r^3];
+        acc = acc + J2;
+    end
+
+    % Drag component (if activated)
+    if par.ENABLE_DRAG
+        rho = harris_priester(r,par);
+        v_sat = state(4:6);
+        drag = -0.5*norm(v_sat)*v_sat*rho*par.prop.A*par.prop.CD;
+        acc = acc + drag/par.prop.MASS;
     end
     
     % Return derivative vectors
