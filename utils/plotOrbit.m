@@ -15,9 +15,10 @@ if par.DEBUG
 end
 
 tic
+ECEF = zeros(size(vec, 1), 3);
 for i = 1:size(vec, 1)
-     [r, v] = eci2ecef(vec(i,:), ECI(i,1:3), ECI(i,4:6));
-     ECEF(i,:) = [r', v']; % contains both position and velocity
+     r = eci2ecef(vec(i,:), ECI(i,1:3));
+     ECEF(i,:) = r'; % contains both position and velocity
 end
 toc
 

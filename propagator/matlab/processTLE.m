@@ -1,4 +1,4 @@
-function [TLE, elem, ECI] = processTLE(par)
+function [TLE, elem, ECI] = processTLE(par, L0, L1, L2)
 % PROCESSTLE computes the initial state for the propagator
 %   Can parse TLEs (Two Line Elements), and generate state for the
 %   propagator based on TLEs
@@ -12,18 +12,26 @@ function [TLE, elem, ECI] = processTLE(par)
 %       
 %
 
+%% Different possible function inputs
+if nargin == 1
+    L0 = par.TLE.L0;
+    L1 = par.TLE.L1;
+    L2 = par.TLE.L2;
+end
+
+
 %% Processing TLE
 % Name
-TLE.name = par.TLE.L0;
+TLE.name = L0;
 
 % Catalog ID
-TLE.catalog_nb = str2double(par.TLE.L1(3:7));
+TLE.catalog_nb = str2double(L1(3:7));
 
 % Classification (U: unclassified, C: classified, S: secret)
-TLE.classification = par.TLE.L1(8);
+TLE.classification = L1(8);
 
 % Launch year
-TLE.launch_year = str2double(par.TLE.L1(10:11));
+TLE.launch_year = str2double(L1(10:11));
 
 if TLE.launch_year > 57
     TLE.launch_year = TLE.launch_year + 1900;
@@ -32,9 +40,9 @@ else
 end
 
 % Epoch
-TLE.epoch = str2double(par.TLE.L1(19:32));
-TLE.epoch_year = str2double(par.TLE.L1(19:20));
-TLE.epoch_day = str2double(par.TLE.L1(21:32));
+TLE.epoch = str2double(L1(19:32));
+TLE.epoch_year = str2double(L1(19:20));
+TLE.epoch_day = str2double(L1(21:32));
 
 if TLE.epoch_year > 57
     TLE.epoch_year = TLE.epoch_year + 1900;
@@ -43,29 +51,29 @@ else
 end
 
 % Drag (B_star = CD*Rho*A/2*m)
-TLE.B_star_drag = str2double([par.TLE.L1(54) '0.' par.TLE.L1(55:59) 'e' par.TLE.L1(60:61)]);
+TLE.B_star_drag = str2double([L1(54) '0.' L1(55:59) 'e' L1(60:61)]);
 
 % Inclination
-elem.i = str2double(par.TLE.L2(9:16)); % [deg]
+elem.i = str2double(L2(9:16)); % [deg]
 
 % Right ascension of the ascending node
-elem.RAAN = str2double(par.TLE.L2(18:25)); % [deg]
+elem.RAAN = str2double(L2(18:25)); % [deg]
 
 % Eccentricity
-elem.ecc = str2double(['0.' par.TLE.L2(27:33)]); % [-]
+elem.ecc = str2double(['0.' L2(27:33)]); % [-]
 
 % Argument of perigee
-elem.omega = str2double(par.TLE.L2(35:42)); % [deg]
+elem.omega = str2double(L2(35:42)); % [deg]
 
 % Mean anomaly
-elem.theta = str2double(par.TLE.L2(44:51));
+elem.theta = str2double(L2(44:51));
 
 % Mean motion
-elem.rev_per_day = str2double(par.TLE.L2(53:63));  
+elem.rev_per_day = str2double(L2(53:63));  
 elem.a = (par.pdata.earth.mu / (elem.rev_per_day * 2*pi/86400)^2)^(1/3); % semi major axis
 
 % Revolution number at epoch
-elem.orbit_nb_epoch = str2double(par.TLE.L2(64:68));  
+elem.orbit_nb_epoch = str2double(L2(64:68));  
 
 %% Conversion to ECI
 % using Aerospace Toolbox
