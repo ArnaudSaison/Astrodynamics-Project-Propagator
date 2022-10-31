@@ -103,7 +103,7 @@ ECI = [r_ijk', v_ijk'];
 % mm = floor((decimal_day * 24 - hh) * 60); % minutes
 % ss = floor(((decimal_day * 24 - hh) * 60 - mm) * 60); % seconds
 % 
-% end_of_month_day = eomday(year, 1:12); % number of days in each month for spacified year
+% end_of_month_day = eomday(TLE.epoch_year, 1:12); % number of days in each month for spacified year
 % 
 % temp = cumsum(end_of_month_day); % last day of each month in day of year format
 % month = find(temp >= day_of_year, 1); % first month that has 
@@ -111,7 +111,7 @@ ECI = [r_ijk', v_ijk'];
 % temp = temp(month) - day_of_year;
 % date = end_of_month_day(month) - temp;
 % 
-% elem.utc = [year, month, date, hh, mm, ss];
+% elem.utc = [TLE.epoch_year, month, date, hh, mm, ss]
 
 
 % juliandate where month is set to 0 to force matlab to convert only the 
