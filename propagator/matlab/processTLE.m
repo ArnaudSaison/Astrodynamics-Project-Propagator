@@ -66,7 +66,10 @@ elem.ecc = str2double(['0.' L2(27:33)]); % [-]
 elem.omega = str2double(L2(35:42)); % [deg]
 
 % Mean anomaly
-elem.theta = str2double(L2(44:51));
+elem.M = str2double(L2(44:51));
+
+% True anomaly
+elem.theta = mean2trueAnomaly(elem.M, elem.ecc);
 
 % Mean motion
 elem.rev_per_day = str2double(L2(53:63));  
