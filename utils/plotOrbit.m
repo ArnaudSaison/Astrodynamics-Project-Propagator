@@ -31,6 +31,10 @@ function [ECEF_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
     grdtrk(ECEF(:,1:3));
     fig_ax.ground_track = gca;
 
+    %% 3D plot
+    plot_3D(par.pdata.earth.radius, ECEF, 'ECEF');
+    fig_ax.plot_3D = gca;
+
 end
 
 function vec = time_conversion(time, jd)
