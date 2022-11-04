@@ -45,7 +45,10 @@
 
 %% Setting up path
 restoredefaultpath
-addpath(genpath('.'));      % setting up path
+addpath('./data');
+addpath('./propagator/matlab');
+addpath('./utils');
+% addpath(genpath('.'));      % setting up path
 clc; close all; clear;      % cleaning up
 
 %% Parameters

@@ -25,17 +25,20 @@
 
 %% Setting up path
 restoredefaultpath
-addpath(genpath('.'));      % setting up path
-clc; close all; clear;      % cleaning up
+addpath('./data');
+addpath('./propagator/matlab');
+addpath('./utils');
+% addpath(genpath('.'));        % setting up path
+clc; close all; clear;          % cleaning up
 
 %% Parameters
-par = parameters();         % user parameters
+par = parameters();             % user parameters
 
 % modifications to parameters for PART 1 (no perturbations)
 par.ENABLE_J2 = 0;
 par.ENABLE_DRAG = 0;
 
-par.N_STEP = 1000;              % [#] number of step in the simulation
+par.N_STEP = 24*60*6;           % [#] number of step in the simulation
 par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
 
 % processing parameters
@@ -45,20 +48,89 @@ dispParam(par);
 %% Propagating
 [time, ECI] = propagator(par);
 
-%% Representing
-ECEF = plotOrbit(par, time, ECI);
+%% Question 1.3: S3L propagator
+restoredefaultpath; % changing path to avoid naming conflicts
+addpath(genpath('./S3Lprop_v1_21'));
 
-%% Question 1.3
+warning off; % removing annoying warnings
+
 [S3L.t, S3L.oe, S3L.par, S3L.cartesian, S3L.geodetic] = ...
     orbprop([par.Orb_elem0.a, ...
              par.Orb_elem0.ecc, ...
              par.Orb_elem0.i, ...
              par.Orb_elem0.omega, ...
              par.Orb_elem0.RAAN, ...
-             ], ...
-            'time', , ...
-            'dt', , ...)
+             par.Orb_elem0.theta], ...
+            'time', par.T_END, ...
+            'dt', par.T_END / (par.N_STEP - 1), ...
+            'fmodel', [par.ENABLE_J2, ...       % grav
+                       par.ENABLE_DRAG, ...     % drag
+                       0, ...                   % SRP
+                       0, ...                   % 3rd-body sun
+                       0], ...                  % 3rd-body moon
+            'Ngrav', 4, 'Mgrav', 4, ...
+            'plot', [1, ...                     % groundrtack
+                     1, ...                     % 3D
+                     0, ...                     % groundtrack
+                     0, ...                     % keplerian
+                     0, ...                     % elem
+                     0], ...                    % altitude
+            'YYYY', par.Orb_elem0.utc_vec(1), ...
+            'MM', par.Orb_elem0.utc_vec(2), ...
+            'DD', par.Orb_elem0.utc_vec(3), ...
+            'hh', par.Orb_elem0.utc_vec(4), ...
+            'mm', par.Orb_elem0.utc_vec(5), ...
+            'ss', par.Orb_elem0.utc_vec(6));
 
+warning on;
+
+%% Resetting path
+restoredefaultpath
+addpath('./data');
+addpath('./propagator/matlab');
+addpath('./utils');
+
+%% Representing
+if par.PLOT_BOTH_TRACKS
+    [ECEF, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
+else
+    [ECEF, fig_ax] = plotOrbit(par, time, ECI);
+end
+
+%% Comparing
+% relative difference in ECI
+diff_rel_eci = [abs((ECI(:,1) - S3L.cartesian(:,1))./S3L.cartesian(:,1)), ...
+                abs((ECI(:,2) - S3L.cartesian(:,2))./S3L.cartesian(:,2)), ...
+                abs((ECI(:,3) - S3L.cartesian(:,3))./S3L.cartesian(:,3))];
+
+figure
+plot(diff_rel_eci)
+grid on
+legend({'x', 'y', 'z'})
+
+% absolute difference in ECI
+diff_abs_eci = [(ECI(:,1) - S3L.cartesian(:,1)), ...
+                (ECI(:,2) - S3L.cartesian(:,2)), ...
+                (ECI(:,3) - S3L.cartesian(:,3))];
+
+figure
+plot(diff_abs_eci)
+grid on
+legend({'x', 'y', 'z'})
+
+% finding lla (latitude longitude altitude)
+% /!\ S3L ouputs altitude longitude latitude
+LLA = ecef2lla(ECEF);
+
+% absolute difference in LLA
+diff_abs_lla  = [(LLA(:,1) - S3L.geodetic(:,3)), ...
+                 (LLA(:,2) - S3L.geodetic(:,2)), ...
+                 (LLA(:,3) - S3L.geodetic(:,1))];
+
+figure
+plot(diff_abs_lla)
+grid on
+legend({'lat', 'long', 'alt'})
 
 
 
