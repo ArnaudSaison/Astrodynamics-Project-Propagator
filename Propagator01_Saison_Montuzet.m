@@ -39,7 +39,7 @@ par.ENABLE_J2 = 0;
 par.ENABLE_DRAG = 0;
 
 par.N_STEP = 24*60*6;           % [#] number of step in the simulation
-par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
+par.T_END = 2*24*3600;          % [s] number of seconds in the simulation
 
 % processing parameters
 par = processParam(par);
@@ -90,47 +90,19 @@ addpath('./data');
 addpath('./propagator/matlab');
 addpath('./utils');
 
-%% Representing
+%% Representing and conversion to non inertial frames
 if par.PLOT_BOTH_TRACKS
     [ECEF, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
 else
     [ECEF, fig_ax] = plotOrbit(par, time, ECI);
 end
 
-%% Comparing
-% relative difference in ECI
-diff_rel_eci = [abs((ECI(:,1) - S3L.cartesian(:,1))./S3L.cartesian(:,1)), ...
-                abs((ECI(:,2) - S3L.cartesian(:,2))./S3L.cartesian(:,2)), ...
-                abs((ECI(:,3) - S3L.cartesian(:,3))./S3L.cartesian(:,3))];
-
-figure
-plot(diff_rel_eci)
-grid on
-legend({'x', 'y', 'z'})
-
-% absolute difference in ECI
-diff_abs_eci = [(ECI(:,1) - S3L.cartesian(:,1)), ...
-                (ECI(:,2) - S3L.cartesian(:,2)), ...
-                (ECI(:,3) - S3L.cartesian(:,3))];
-
-figure
-plot(diff_abs_eci)
-grid on
-legend({'x', 'y', 'z'})
-
 % finding lla (latitude longitude altitude)
 % /!\ S3L ouputs altitude longitude latitude
 LLA = ecef2lla(ECEF);
 
-% absolute difference in LLA
-diff_abs_lla  = [(LLA(:,1) - S3L.geodetic(:,3)), ...
-                 (LLA(:,2) - S3L.geodetic(:,2)), ...
-                 (LLA(:,3) - S3L.geodetic(:,1))];
-
-figure
-plot(diff_abs_lla)
-grid on
-legend({'lat', 'long', 'alt'})
+%% Comparing
+errorComparison(ECI, LLA, S3L.cartesian, S3L.geodetic)
 
 
 

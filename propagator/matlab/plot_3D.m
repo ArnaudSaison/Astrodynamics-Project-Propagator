@@ -1,4 +1,4 @@
-function plot_3D(earth_radius,stateout)
+function plot_3D(earth_radius,stateout, type)
     % Make Earth
     [X,Y,Z] = sphere;
     X = X*earth_radius;
@@ -38,7 +38,7 @@ function plot_3D(earth_radius,stateout)
     zlabel('z');
     grid on;
 
-    surf(X,Y,Z,'EdgeColor','none', 'DisplayName', 'Earth (ECI)');
+    surf(X,Y,Z,'EdgeColor','none', 'DisplayName', ['Earth (', type, ')']);
     colormap winter;
     axis equal;
 end

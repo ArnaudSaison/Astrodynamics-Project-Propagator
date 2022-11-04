@@ -3,7 +3,7 @@ function [ECEF_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
 %   
 
     %% 3D plot
-    plot_3D(par.pdata.earth.radius, ECI);
+    plot_3D(par.pdata.earth.radius, ECI, 'ECI');
     fig_ax.plot_3D = gca;
     
     %% Conversion to ECEF
