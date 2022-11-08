@@ -1,9 +1,23 @@
-function rho = harris_priester(r, par)
-% rho send the resulting density following Harris-Priester model
+function rho = harris_priester(r, par ,T)
+    % rho send the resulting density following Harris-Priester model
+    % Orbital parameters of the sun
+    epsilon = deg2rad(23.43929111);          % rad
+    M = mod(357.5256+35999.049*T,360);       % deg
+
+    Ecliptic_Lon = mod(par.pdata.sun.omega_o + deg2rad(M) + 6892/3600*sin(deg2rad(M)) ...
+        + 72/3600*sin(deg2rad(2*M)) + deg2rad(1.972)*T,2*pi);       % rad
+    
+    RA = atan2(cos(epsilon)*sin(Ecliptic_Lon),cos(Ecliptic_Lon));   % rad
+    SD = asin(sin(deg2rad(-23.44))*sin(Ecliptic_Lon));              % rad
+
+    u_b = [cos(SD)*cos(RA+par.pdata.sun.lag)...
+          ,cos(SD)*sin(RA+par.pdata.sun.lag)...
+          ,sin(SD)];
+
     norm_r = norm(r);
 
     n = 2; % for low inclination orbit
-    angle_vector_bulge = (0.5+(r'*par.sun.u_b')/(2*norm_r))^(n/2);
+    angle_vector_bulge = (0.5+(r'*u_b')/(2*norm_r))^(n/2);
 
     h = norm_r-par.pdata.earth.radius;
 

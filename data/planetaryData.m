@@ -17,11 +17,13 @@ sun.name = 'Sun';                   % [str] name
 sun.mass = 1.989e30;                % [kg] mass
 sun.mu = 1.32712e11;                % [m^3.s^-2] gravitational parameter
 sun.radius = 695700e3;              % [m] radius
+sun.omega_o = 282.94*pi/180;        % [rad]
+sun.lag = 30*pi/180;                % [rad] lag
 
 earth.name = 'Earth';               % [str] name
 earth.mass = 5.972e24;              % [kg] mass
-earth.mu = earth.mass * pdata.G;    % [km^3.s^-2] gravitational parameter
-% earth.mu = 398600;
+% earth.mu = earth.mass * pdata.G;    % [km^3.s^-2] gravitational parameter
+earth.mu = 3.986004418e14;
 earth.radius = 6378.0e3;            % [m] radius
 % earth.radius = 6378.0e0;            % [km] radius
 earth.J2 = 1.082635854e-3;          % 

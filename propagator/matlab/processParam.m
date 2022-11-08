@@ -20,13 +20,6 @@ par.pdata = planetaryData();
 par.tspan = linspace(0, par.T_END, par.N_STEP);
 [par.TLE.processed, par.Orb_elem0, par.ECI0] = processTLE(par);
 
-% Process sun parameters
-par.sun.SD = (par.sun.Declination(1) + par.sun.Declination(2)/60 + par.sun.Declination(3)/3600)*pi/180;
-par.sun.RA = (par.sun.Right_Ascension(1) + par.sun.Right_Ascension(2)/60 + par.sun.Right_Ascension(3)/3600)/24*360*pi/180;
-par.sun.u_b = [cos(par.sun.SD)*cos(par.sun.RA+par.sun.lag)...
-              ,cos(par.sun.SD)*sin(par.sun.RA+par.sun.lag)...
-              ,sin(par.sun.SD)]; % unit vector (apex of the diurnal budge)
-
 
 % Dev
 if par.DEBUG
