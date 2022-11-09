@@ -13,7 +13,7 @@ function par = parameters()
 % - J2: enables the J2 perturbation
 % - drag: enables drag
 par.ENABLE_J2 = 1;
-par.ENABLE_DRAG = 0;
+par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
 par.TLE.L0 = 'ISS (ZARYA)';
