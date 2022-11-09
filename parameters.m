@@ -10,8 +10,6 @@ function par = parameters()
 % 
 
 % Enable (1) / Disable (0) functionalities
-% - J2: enables the J2 perturbation
-% - drag: enables drag
 par.ENABLE_J2 = 1;
 par.ENABLE_DRAG = 1;
 
