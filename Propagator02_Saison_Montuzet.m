@@ -68,10 +68,10 @@ warning off; % removing annoying warnings
                        0, ...                   % SRP
                        0, ...                   % 3rd-body sun
                        0], ...                  % 3rd-body moon
-            'Ngrav', 4, 'Mgrav', 4, ...
+            'Ngrav', 2, 'Mgrav', 0, ...
             'plot', [1, ...                     % groundrtack
                      1, ...                     % 3D
-                     0, ...                     % groundtrack
+                     0, ...                     % groundtrack 3D
                      0, ...                     % keplerian
                      0, ...                     % elem
                      0], ...                    % altitude
