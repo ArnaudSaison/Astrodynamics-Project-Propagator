@@ -15,5 +15,5 @@ function [tout,stateout] = propagator(par)
 opts = odeset("RelTol", par.REL_TOL, "AbsTol", par.ABS_TOL, "Stats", par.displ_stats);
 
 tic
-[tout, stateout] = ode78(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
+[tout, stateout] = ode113(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
 toc
