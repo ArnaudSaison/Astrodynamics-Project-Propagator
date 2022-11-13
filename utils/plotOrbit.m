@@ -1,10 +1,14 @@
-function [ECEF_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
+function [ECEF_out, LLA_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
 % PLOTORBIT Represents the orbit in different ways
 %   
 
     %% 3D plot
     plot_3D(par.pdata.earth.radius, ECI, 'ECI');
     fig_ax.plot_3D = gca;
+
+    if par.PRINT_PDF
+        fig2pdf(gcf, '3D_plot_ECI', 1, 1.5, par.PDF_FOLDER)
+    end
     
     %% Conversion to ECEF
     if nargin == 4
@@ -26,14 +30,27 @@ function [ECEF_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
         ECEF_out = ECEF;
 
     end
+
+    %% Converting to LLA
+    % finding lla (latitude longitude altitude)
+    % /!\ S3L ouputs altitude longitude latitude
+    LLA_out = ecef2lla(ECEF_out);
     
     %% Using the groundtrack function
     grdtrk(ECEF(:,1:3));
     fig_ax.ground_track = gca;
 
+    if par.PRINT_PDF
+        fig2pdf(gcf, 'ground_track', 1, 1.5, par.PDF_FOLDER)
+    end
+
     %% 3D plot
     plot_3D(par.pdata.earth.radius, ECEF, 'ECEF');
     fig_ax.plot_3D = gca;
+
+    if par.PRINT_PDF
+        fig2pdf(gcf, '3D_plot_ECEF', 1, 1.5, par.PDF_FOLDER)
+    end
 
 end
 

@@ -1,4 +1,4 @@
-function errorComparison(ECI, LLA, ECI2, LLA2)
+function errorComparison(par, time, ECI, LLA, ECI2, LLA2)
 % ERRORCOMPARISON
 %
 
@@ -18,11 +18,15 @@ diff_abs_eci = [(ECI(:,1) - ECI2(:,1)), ...
                 (ECI(:,3) - ECI2(:,3))];
 
 figure('Name', 'Absolute difference in ECI')
-plot([diff_abs_eci, vecnorm(diff_abs_eci, 2, 2)])
+plot(time, [diff_abs_eci, vecnorm(diff_abs_eci, 2, 2)])
 grid on
 ylabel('Distance error [m]')
 xlabel('Time [s]')
 legend({'x', 'y', 'z', 'norm'})
+
+if par.PRINT_PDF
+    fig2pdf(gcf, 'error_abs_ECI', 1, 1.5, par.PDF_FOLDER)
+end
 
 %% absolute difference in LLA (latitude longitude altitude)
 diff_abs_lla  = [(LLA(:,1) - LLA2(:,3)), ...
@@ -46,7 +50,7 @@ end
 figure('Name', 'Absolute difference in LLA')
 % for the altitude
 subplot(2,1,1)
-plot(diff_abs_lla(:,3))
+plot(time, diff_abs_lla(:,3))
 grid on
 ylabel('Altitude error [m]')
 xlabel('Time [s]')
@@ -54,11 +58,15 @@ legend({'altitude'})
 
 % for lat and long
 subplot(2,1,2)
-plot(diff_abs_lla(:,1:2))
+plot(time, diff_abs_lla(:,1:2))
 grid on
 ylabel('Error [°]')
 xlabel('Time [s]')
 legend({'lat', 'long'})
+
+if par.PRINT_PDF
+    fig2pdf(gcf, 'error_abs_LLA', 1, 1.5, par.PDF_FOLDER)
+end
 
 
 end

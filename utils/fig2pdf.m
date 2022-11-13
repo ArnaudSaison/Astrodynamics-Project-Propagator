@@ -32,7 +32,7 @@ if nargin == 4
 end
 
 % in the folder does not exist
-if ~exist(folder, 'dir')
+if ~exist(folder, 'dir') && ~isempty(folder)
     mkdir(folder);
     warning('Missing folder was created to save the Figure.', 'verbose');
 end

@@ -43,3 +43,5 @@ par.DEBUG = 1;                  % additional information during execution
 % Representation options
 par.PLOT_BOTH_TRACKS = 1;       % 1 = when comparing orbits, plots both on 
                                 % same groundtrack / 0 = only propagated
+par.PRINT_PDF = 0;              % prints figures to PDF in the figures folder
+par.PDF_FOLDER = 'figures/';     % folder in which PDF figures are saved

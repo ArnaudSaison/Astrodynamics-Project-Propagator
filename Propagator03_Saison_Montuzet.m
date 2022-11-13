@@ -89,18 +89,14 @@ addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figur
 
 %% Representing and converting to non-inertial frames
 if par.PLOT_BOTH_TRACKS
-    [ECEF, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
+    [ECEF, LLA, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
 else
-    [ECEF, fig_ax] = plotOrbit(par, time, ECI);
+    [ECEF, LLA, fig_ax] = plotOrbit(par, time, ECI);
 end
-
-% finding lla (latitude longitude altitude)
-% /!\ S3L ouputs altitude longitude latitude
-LLA = ecef2lla(ECEF);
 
 
 %% Comparing
-errorComparison(ECI, LLA, S3L.cartesian, S3L.geodetic)
+errorComparison(par, time, ECI, LLA, S3L.cartesian, S3L.geodetic)
 
 
 
