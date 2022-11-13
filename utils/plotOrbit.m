@@ -10,19 +10,19 @@ function [ECEF_out, fig_ax] = plotOrbit(par, time, ECI, comparison)
     if nargin == 4
         % adding comparison
         time = [time; NaN; time];
-        vec = time_conversion(time, par.Orb_elem0.utc_jd);
+        time_vec = time_conversion(time, par.Orb_elem0.utc_jd);
         ECI = [ECI; [NaN, NaN, NaN, NaN, NaN, NaN]; comparison];
         
         % converting to ECEF
-        ECEF = ECEF_conversion(par, ECI, vec);
+        ECEF = ECEF_conversion(par, ECI, time_vec);
 
         % output can't contain comparison
-        ECEF_out = ECEF(1:(size(vec, 1)-1)/2, :);
+        ECEF_out = ECEF(1:(size(time_vec, 1)-1)/2, :);
 
     else
         % no comparison
-        vec = time_conversion(time, par.Orb_elem0.utc_jd);
-        ECEF = ECEF_conversion(par, ECI, vec);
+        time_vec = time_conversion(time, par.Orb_elem0.utc_jd);
+        ECEF = ECEF_conversion(par, ECI, time_vec);
         ECEF_out = ECEF;
 
     end
@@ -47,7 +47,7 @@ function vec = time_conversion(time, jd)
 
 end
 
-function ECEF_converted = ECEF_conversion(par, ECI, vec)
+function ECEF_converted = ECEF_conversion(par, ECI, time_vec)
 % ECEF_CONVERTED 
 %
 
@@ -56,10 +56,10 @@ function ECEF_converted = ECEF_conversion(par, ECI, vec)
     end
     
     tic
-    ECEF_converted = zeros(size(vec, 1), 3);
-    for i = 1:size(vec, 1)
-        if ~isnan(vec(i,:))
-            r = eci2ecef(vec(i,:), ECI(i,1:3));
+    ECEF_converted = zeros(size(time_vec, 1), 3);
+    for i = 1:size(time_vec, 1)
+        if ~isnan(time_vec(i,:))
+            r = eci2ecef(time_vec(i,:), ECI(i,1:3));
             ECEF_converted(i,:) = r'; % contains both position and velocity
         else
             ECEF_converted(i,:) = [NaN, NaN, NaN];

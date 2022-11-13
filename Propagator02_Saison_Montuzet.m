@@ -24,29 +24,23 @@
 % =========================================================================
 
 %% Setting up path
-restoredefaultpath
-addpath('./data');
-addpath('./propagator/matlab');
-addpath('./utils');
-% addpath(genpath('.'));        % setting up path
 clc; close all; clear;          % cleaning up
+restoredefaultpath              % restores path
+addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
+
 
 %% Parameters
-par = parameters();             % user parameters
-
-% modifications to parameters for PART 1 (no perturbations)
-par.ENABLE_J2 = 1;
-par.ENABLE_DRAG = 0;
-
-par.N_STEP = 24*60*6;           % [#] number of step in the simulation
-par.T_END = 2*24*3600;          % [s] number of seconds in the simulation
+PARAMETERS_FILE = 'parameters02';
+run([PARAMETERS_FILE, '.m']);   % user parameters (generates structure named 'par')
 
 % processing parameters
 par = processParam(par);
 dispParam(par);
 
+
 %% Propagating
 [time, ECI] = propagator(par);
+
 
 %% Question 1.3: S3L propagator
 restoredefaultpath; % changing path to avoid naming conflicts
@@ -80,17 +74,20 @@ warning off; % removing annoying warnings
             'DD', par.Orb_elem0.utc_vec(3), ...
             'hh', par.Orb_elem0.utc_vec(4), ...
             'mm', par.Orb_elem0.utc_vec(5), ...
-            'ss', par.Orb_elem0.utc_vec(6));
+            'ss', par.Orb_elem0.utc_vec(6), ...
+            'waitbar', 0, ...
+            'RelTol', par.REL_TOL, ...
+            'AbsTol', par.ABS_TOL);
 
 warning on;
 
-%% Resetting path
-restoredefaultpath
-addpath('./data');
-addpath('./propagator/matlab');
-addpath('./utils');
 
-%% Representing and conversion to non inertial frames
+%% Resetting path
+restoredefaultpath              % restores path
+addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
+
+
+%% Representing and converting to non-inertial frames
 if par.PLOT_BOTH_TRACKS
     [ECEF, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
 else
@@ -100,6 +97,7 @@ end
 % finding lla (latitude longitude altitude)
 % /!\ S3L ouputs altitude longitude latitude
 LLA = ecef2lla(ECEF);
+
 
 %% Comparing
 errorComparison(ECI, LLA, S3L.cartesian, S3L.geodetic)

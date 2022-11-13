@@ -1,9 +1,10 @@
-function plot_3D(earth_radius,stateout, type)
+function plot_3D(earth_radius, stateout, type)
     % Make Earth
-    [X,Y,Z] = sphere;
-    X = X*earth_radius;
-    Y = Y*earth_radius;
-    Z = Z*earth_radius;
+    [X, Y, Z] = sphere;
+
+    X = X * earth_radius;
+    Y = Y * earth_radius;
+    Z = Z * earth_radius;
     
     % State vector
     xout = stateout(:,1);
@@ -11,12 +12,13 @@ function plot_3D(earth_radius,stateout, type)
     zout = stateout(:,3);
     
     % Plot 3D
-    fig = figure();
+    fig = figure('Name', '3D plot');
     set(fig,'color','white');
-    plot3(xout,yout,zout,'r-','LineWidth', 1, 'DisplayName', 'orbit');
+    plot3(xout, yout, zout,'r-', 'LineWidth', 1, 'DisplayName', 'orbit');
     hold on;
 
-    scatter3(xout(end),yout(end),zout(end), 150, ...
+    % end marker
+    scatter3(xout(end), yout(end), zout(end), 150, ...
         'MarkerEdgeColor', 'black', ...
         'MarkerFaceColor', 'magenta', ...
         'Marker','square', ...
@@ -24,7 +26,8 @@ function plot_3D(earth_radius,stateout, type)
         'DisplayName', 'End');
     hold on;
 
-    scatter3(xout(1),yout(1),zout(1), 150, ...
+    % start marker
+    scatter3(xout(1), yout(1), zout(1), 150, ...
         'MarkerEdgeColor', 'black', ...
         'MarkerFaceColor', 'cyan', ...
         'Marker','square', ...
@@ -32,13 +35,15 @@ function plot_3D(earth_radius,stateout, type)
         'DisplayName', 'Start');
     hold on;
 
+    % legend and labels
     legend();
-    xlabel('x');
-    ylabel('y');
-    zlabel('z');
+    xlabel('x [m]');
+    ylabel('y [m]');
+    zlabel('z [m]');
     grid on;
 
-    surf(X,Y,Z,'EdgeColor','none', 'DisplayName', ['Earth (', type, ')']);
+    % Earth representation
+    surf(X, Y, Z ,'EdgeColor', 'none', 'DisplayName', ['Earth (', type, ')']);
     colormap winter;
     axis equal;
 end

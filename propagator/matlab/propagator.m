@@ -11,9 +11,18 @@ function [tout,stateout] = propagator(par)
 % 
 % 
 
+disp('Solving ODE...')
+
 % ODE
 opts = odeset("RelTol", par.REL_TOL, "AbsTol", par.ABS_TOL, "Stats", par.displ_stats);
 
 tic
-[tout, stateout] = ode113(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
+switch par.SOLVER
+    case {'ODE113'}
+        [tout, stateout] = ode113(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
+    case {'ODE45'}
+        [tout, stateout] = ode45(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
+    otherwise
+        error('par.SOLVER specifies unknown MATLAB solver.')
+end
 toc

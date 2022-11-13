@@ -2,6 +2,8 @@ function [theta] = mean2trueAnomaly(meanAno, ecc)
 %MEAN2TRUEANOMALY converts mean anomaly to true anomaly
 %
 
+disp('Converting mean anomaly to true anomaly...')
+
 % Eccentric anomaly
 eccAno =@(x) x - ecc * sin(x) - deg2rad(meanAno);
 E = fsolve(eccAno, 0);

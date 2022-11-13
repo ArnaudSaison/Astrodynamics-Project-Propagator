@@ -1,9 +1,11 @@
 function grdtrk(xECEF)
-
+% GRDTRK plots the ground track
 % 
 % This function display the ground track of the spacecraft.
 % In input it is required an Nx3 matrix defining N cartesian position in
 % the Earth Centered Earth Fixed frame.
+%
+% Modified for the purpose of this project
 % 
 
 n = size(xECEF, 1);
@@ -37,7 +39,7 @@ end
 set(0, 'defaultaxesfontsize', 16);
 set(0, 'defaulttextfontsize', 16);
 
-figure;
+figure('Name', 'Ground track');
 box on;
 axis on;
 view(0, 90);

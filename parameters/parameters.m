@@ -1,12 +1,7 @@
-function par = parameters()
-% PARAMETERS user set parameters (no processing)
-%   No processing should be done in this file as it is done
-%   'processParam.m'. This allows 
-% 
-% Inputs: -
-% 
-% Ouputs:
-%   par = structure containing parameters
+% -------------------------------------------------------------------------
+% PARAMETERS for PART 1
+% -------------------------------------------------------------------------
+% No processing should be done in this file as it is done in 'processParam.m'.
 % 
 
 % Enable (1) / Disable (0) functionalities
@@ -14,7 +9,7 @@ par.ENABLE_J2 = 1;
 par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
-statement = 0; % use project statement TLE
+statement = 0; % 1 = use project statement TLE / 0 = use latest TLE
 
 if statement
     par.TLE.L0 = 'ISS (ZARYA)';
@@ -30,6 +25,7 @@ par.prop.CD = 2.00;             % [-] drag coefficient of the object
 par.prop.A = 1641;              % [m^2] object area
 
 % Simulation parameters
+par.SOLVER = 'ODE113';          % [str] solver used for propagation can be: ODE45, ODE113
 par.N_STEP = 5000;              % [#] number of step in the simulation
 par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-10;            % [?] relative tolerance
@@ -40,5 +36,3 @@ par.DEBUG = 1;
 
 % Representation options
 par.PLOT_BOTH_TRACKS = 1;
-
-end

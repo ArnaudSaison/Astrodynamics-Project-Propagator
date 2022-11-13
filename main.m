@@ -44,20 +44,22 @@
 % =========================================================================
 
 %% Setting up path
-restoredefaultpath
-addpath('./data');
-addpath('./propagator/matlab');
-addpath('./utils');
-% addpath(genpath('.'));      % setting up path
-clc; close all; clear;      % cleaning up
+clc; close all; clear;          % cleaning up
+restoredefaultpath              % restores path
+addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
 
 %% Parameters
-par = parameters();         % user parameters
-par = processParam(par);    % processing parameters
-dispParam(par);
+PARAMETERS_FILE = 'parameters01.m';
+run(PARAMETERS_FILE);           % user parameters (generates structure named 'par')
 
 %% Propagating
 [time, ECI] = propagator(par);
 
-%% Representing
-ECEF = plotOrbit(par, time, ECI);
+%% Representing and converting to non-inertial frames
+[ECEF, fig_ax] = plotOrbit(par, time, ECI);
+
+% finding lla (latitude longitude altitude)
+% /!\ S3L ouputs altitude longitude latitude
+LLA = ecef2lla(ECEF);
+
+
