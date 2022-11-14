@@ -20,7 +20,6 @@ par.pdata = planetaryData();
 par.tspan = linspace(0, par.T_END, par.N_STEP);
 [par.TLE.processed, par.Orb_elem0, par.ECI0] = processTLE(par);
 
-
 % Dev
 if par.DEBUG
     par.displ_stats = 'on';

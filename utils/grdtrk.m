@@ -1,4 +1,4 @@
-function grdtrk(xECEF)
+function grdtrk(xECEF, time_vec)
 % GRDTRK plots the ground track
 % 
 % This function display the ground track of the spacecraft.
@@ -15,7 +15,7 @@ LON = zeros(n, 1);
 LAT = zeros(n, 1);
 H = zeros(n, 1);
 
-for j = 1 : n,
+for j = 1 : n
     [H(j), LON(j), LAT(j)] = ecef2geodetic(xECEF(j, :)');
 end
 
@@ -25,8 +25,8 @@ Hgdtrk = H * 1e-3;
 
 % Find discontinuites
 N = length(LAT);
-for j = 1 : 1 : (N - 1),
-    if abs(LON(j + 1) - LON(j)) > 300,
+for j = 1 : 1 : (N - 1)
+    if abs(LON(j + 1) - LON(j)) > 300
         LON = [LON(1 : j); NaN; LON((j + 1) : N)];
         LAT = [LAT(1 : j); NaN; LAT((j + 1) : N)];
         Hgdtrk = [Hgdtrk(1 : j); NaN; Hgdtrk((j + 1) : N)];
@@ -50,15 +50,16 @@ hold on;
 grid on;
 plot3(LON, LAT, Hgdtrk, 'r', 'linewidth', 0.2);
 inizio = plot3(LON(1), LAT(1), Hgdtrk(1), 's', ...
-    'MarkerEdgeColor', 'b', 'MarkerFaceColor', 'r', 'MarkerSize', 5);
+    'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'r', 'MarkerSize', 5);
 fine = plot3(LON(end), LAT(end), Hgdtrk(end), 's', ...
-    'MarkerEdgeColor', 'b', 'MarkerFaceColor', 'c', 'MarkerSize', 5);
+    'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'c', 'MarkerSize', 5);
 xlabel('Longitude [deg]');
 ylabel('Latitude [deg]');
 zlabel('Altitude [km]');
 xlim([-180 180]);
 ylim([-90 90]);
-legend([inizio, fine], 'Start', 'End');
+legend([inizio, fine], ['Start (', char(datetime(time_vec(1,:))), ')'], ...
+                       ['End (', char(datetime(time_vec(end,:))), ')']);
 title('Ground track');
 set(gca, 'xtick', -180 : 60 : 180, 'ytick', -90 : 30 : 90);
 hold off;
@@ -89,7 +90,7 @@ function [h, lambda, phi] = ecef2geodetic(rECEF)
 
 persistent a e2 ep2 f b
 
-if isempty(a),
+if isempty(a)
     % Ellipsoid constants
     a  = 6378.137e3; % Semimajor axis
     e2 = 0.081819190842^2; % Square of first eccentricity

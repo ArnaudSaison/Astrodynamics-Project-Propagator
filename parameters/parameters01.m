@@ -14,7 +14,7 @@ par.ENABLE_J2 = 0;
 par.ENABLE_DRAG = 0;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
-useStatementTLE = 0; % 1 = use project statement TLE / 0 = use latest TLE
+useStatementTLE = 1; % 1 = use project statement TLE / 0 = use latest TLE
 
 if useStatementTLE
     par.TLE.L0 = 'ISS (ZARYA)';
@@ -22,6 +22,7 @@ if useStatementTLE
     par.TLE.L2 = '2 25544  51.6432  92.1296 0003569 315.0383 213.8529 15.50120356364100';
 else
     par.TLE = getLatestTLE('ISS (ZARYA)');
+    %par.TLE = getLatestTLE('HST');
 end
 
 % Object properties
@@ -41,7 +42,7 @@ par.ABS_TOL = 1e-10;            % [?] absolute tolerance
 par.DEBUG = 1;                  % additional information during execution
 
 % Representation options
-par.PLOT_BOTH_TRACKS = 1;       % 1 = when comparing orbits, plots both on 
+par.PLOT_BOTH_TRACKS = 0;       % 1 = when comparing orbits, plots both on 
                                 % same groundtrack / 0 = only propagated
 par.PRINT_PDF = 1;              % prints figures to PDF in the figures folder
 par.PDF_FOLDER = 'figures/';     % folder in which PDF figures are saved

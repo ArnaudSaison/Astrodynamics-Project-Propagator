@@ -3,6 +3,7 @@
 *.asv
 *.slxc
 *.original
+*.pdf
 slprj/
 CodeGen/
 cache/
