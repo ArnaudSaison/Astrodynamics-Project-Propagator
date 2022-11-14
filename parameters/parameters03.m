@@ -11,7 +11,7 @@
 % 
 
 % Enable (1) / Disable (0) functionalities
-par.ENABLE_J2 = 1;
+par.ENABLE_J2 = 0;
 par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
