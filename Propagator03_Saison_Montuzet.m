@@ -24,9 +24,15 @@
 % =========================================================================
 
 %% Setting up path
+% /!\ WARNING: The S3L files should be placed in a folder in the root
+% folder of the project. Doing otherwise will cause naming conflicts.
 clc; close all; clear;          % cleaning up
+
+path.gator = char(join({'./data/', './propagator/matlab/', './utils/', './parameters/', './figures/'}, ':'));
+path.S3L = genpath('./S3Lprop_v1_21');
+
 restoredefaultpath              % restores path
-addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
+addpath(path.gator);            % sets path
 
 
 %% Parameters
@@ -47,7 +53,7 @@ dispParam(par);
 
 %% Question 3.2: S3L propagator
 restoredefaultpath; % changing path to avoid naming conflicts
-addpath(genpath('./S3Lprop_v1_21'));
+addpath(path.S3L);
 
 warning off; % removing annoying warnings
 if par.DEBUG
@@ -95,7 +101,7 @@ warning on;
 
 %% Resetting path
 restoredefaultpath              % restores path
-addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
+addpath(path.gator);
 
 
 %% Question 3.3: propagated ISS position after 24h
@@ -106,12 +112,11 @@ dispLine('=');
 
 
 %% Question -: Representing orbit
-[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF);
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA);
 
 
 %% Comparing
 errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
-
 
 
 
