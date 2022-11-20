@@ -11,7 +11,7 @@ function [tout,stateout] = propagator(par)
 % 
 % 
 
-disp('Solving ODE...')
+disp(['Solving ODE using ', par.SOLVER, ' ...'])
 
 % ODE
 opts = odeset("RelTol", par.REL_TOL, "AbsTol", par.ABS_TOL, "Stats", par.displ_stats);
@@ -20,6 +20,8 @@ tic
 switch par.SOLVER
     case {'ODE113'}
         [tout, stateout] = ode113(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
+    case {'ODE78'}
+        [tout, stateout] = ode78(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
     case {'ODE45'}
         [tout, stateout] = ode45(@(t, y) diffEq(t, y, par), par.tspan, par.ECI0, opts);
     otherwise

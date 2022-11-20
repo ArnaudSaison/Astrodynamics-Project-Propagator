@@ -39,7 +39,7 @@ end
 set(0, 'defaultaxesfontsize', 16);
 set(0, 'defaulttextfontsize', 16);
 
-figure('Name', 'Ground track');
+figure('Name', 'Ground track', 'WindowStyle', 'docked');
 box on;
 axis on;
 view(0, 90);

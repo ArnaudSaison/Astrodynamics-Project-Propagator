@@ -1,4 +1,4 @@
-function errorComparison(par, time, ECI, LLA, ECI2, LLA2)
+function errorComparison(par, time, time_vec, ECI, LLA, ECI2, LLA2)
 % ERRORCOMPARISON computes and plots difference between inputs
 %
 
@@ -17,14 +17,16 @@ diff_abs_eci = [(ECI(:,1) - ECI2(:,1)), ...
                 (ECI(:,2) - ECI2(:,2)), ...
                 (ECI(:,3) - ECI2(:,3))];
 
-figure('Name', 'Absolute difference in ECI')
-plot(time, [diff_abs_eci, vecnorm(diff_abs_eci, 2, 2)]); hold on;
-plotDayLines(time(end))
+figure('Name', 'Absolute difference in ECI', 'WindowStyle', 'docked')
+plot(datetime(time_vec), [diff_abs_eci, vecnorm(diff_abs_eci, 2, 2)]); hold on;
+%plotDayLines(time(end))
 grid on
 ylabel('Distance error [m]')
-xlabel('Time [s]')
+xlabel('Time')
 legend({'x', 'y', 'z', 'norm'}, ...
        'Location','southwest')
+xtickangle(0);
+xticksCustomDate();
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'error_abs_ECI', 1, 1.5, par.PDF_FOLDER)
@@ -49,24 +51,28 @@ for i = 1:size((diff_abs_lla(:,2)), 1)
     end
 end
 
-figure('Name', 'Absolute difference in LLA')
+figure('Name', 'Absolute difference in LLA', 'WindowStyle', 'docked')
 % for the altitude
 subplot(2,1,1) 
-plot(time, diff_abs_lla(:,3)); hold on;
-plotDayLines(time(end))
+plot(datetime(time_vec), diff_abs_lla(:,3)); hold on;
+%plotDayLines(time(end))
 grid on
 ylabel('Altitude error [m]')
-xlabel('Time [s]')
+%xlabel('Time')
 legend({'altitude'})
+xtickangle(0);
+xticksCustomDate();
 
 % for lat and long
 subplot(2,1,2)
-plot(time, diff_abs_lla(:,1:2)); hold on;
-plotDayLines(time(end))
+plot(datetime(time_vec), diff_abs_lla(:,1:2)); hold on;
+%plotDayLines(time(end))
 grid on
 ylabel('Error [°]')
-xlabel('Time [s]')
+xlabel('Time')
 legend({'lat', 'long'})
+xtickangle(0);
+xticksCustomDate();
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'error_abs_LLA', 1, 1.5, par.PDF_FOLDER)

@@ -41,12 +41,18 @@ dispParam(par);
 %% Propagating
 [time, ECI] = propagator(par);
 
+% conversions
+[ECEF, LLA, OE, time_vec] = ECI2ECEF2LLA2OE(ECI, time, par);
 
-%% Question 1.3: S3L propagator
+
+%% Question 2.2: S3L propagator
 restoredefaultpath; % changing path to avoid naming conflicts
 addpath(genpath('./S3Lprop_v1_21'));
 
 warning off; % removing annoying warnings
+if par.DEBUG
+    disp('Running the S3L propagator...')
+end
 
 [S3L.t, S3L.oe, S3L.par, S3L.cartesian, S3L.geodetic] = ...
     orbprop([par.Orb_elem0.a, ...
@@ -56,7 +62,7 @@ warning off; % removing annoying warnings
              par.Orb_elem0.RAAN, ...
              par.Orb_elem0.theta], ...
             'time', par.T_END, ...
-            'dt', par.T_END / (par.N_STEP - 1), ...
+            'dt', par.T_END / par.N_STEP, ...
             'fmodel', [par.ENABLE_J2, ...       % grav
                        par.ENABLE_DRAG, ...     % drag
                        0, ...                   % SRP
@@ -65,10 +71,10 @@ warning off; % removing annoying warnings
             'Ngrav', 2, 'Mgrav', 0, ...
             'plot', [1, ...                     % groundrtack
                      1, ...                     % 3D
-                     0, ...                     % groundtrack 3D
-                     0, ...                     % keplerian
-                     0, ...                     % elem
-                     0], ...                    % altitude
+                     1, ...                     % groundtrack 3D
+                     1, ...                     % keplerian
+                     1, ...                     % elem
+                     1], ...                    % altitude
             'YYYY', par.Orb_elem0.utc_vec(1), ...
             'MM', par.Orb_elem0.utc_vec(2), ...
             'DD', par.Orb_elem0.utc_vec(3), ...
@@ -77,7 +83,8 @@ warning off; % removing annoying warnings
             'ss', par.Orb_elem0.utc_vec(6), ...
             'waitbar', 0, ...
             'RelTol', par.REL_TOL, ...
-            'AbsTol', par.ABS_TOL);
+            'AbsTol', par.ABS_TOL, ...
+            'ecef', [1, 1, 1, 1]);
 
 warning on;
 
@@ -87,18 +94,17 @@ restoredefaultpath              % restores path
 addpath('./data/', './propagator/matlab/', './utils/', './parameters/', './figures/');
 
 
-%% Representing and converting to non-inertial frames
-if par.PLOT_BOTH_TRACKS
-    [ECEF, LLA, fig_ax] = plotOrbit(par, time, ECI, S3L.cartesian);
-else
-    [ECEF, LLA, fig_ax] = plotOrbit(par, time, ECI);
-end
+%% Question 2.3: propagated ISS position after 24h
+dispLine('=');
+disp(['<strong>Keplerian Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
+dispKeplerian(OE.i(end), OE.RAAN(end), OE.ecc(end), OE.omega(end), OE.theta(end), OE.a(end));
+dispLine('=');
+
+
+%% Question -: Representing orbit
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE);
 
 
 %% Comparing
-errorComparison(par, time, ECI, LLA, S3L.cartesian, S3L.geodetic)
-
-
-
-
+errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
 

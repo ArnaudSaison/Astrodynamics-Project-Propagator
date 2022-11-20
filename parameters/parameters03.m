@@ -15,7 +15,7 @@ par.ENABLE_J2 = 0;
 par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
-statement = 0; % 1 = use project statement TLE / 0 = use latest TLE
+statement = 1; % 1 = use project statement TLE / 0 = use latest TLE
 
 if statement
     par.TLE.L0 = 'ISS (ZARYA)';
@@ -45,4 +45,4 @@ par.DEBUG = 1;                  % additional information during execution
 par.PLOT_BOTH_TRACKS = 1;       % 1 = when comparing orbits, plots both on 
                                 % same groundtrack / 0 = only propagated
 par.PRINT_PDF = 0;              % prints figures to PDF in the figures folder
-par.PDF_FOLDER = 'figures/';     % folder in which PDF figures are saved
+par.PDF_FOLDER = 'figures/3_';  % folder in which PDF figures are saved
