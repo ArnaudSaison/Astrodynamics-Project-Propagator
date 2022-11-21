@@ -1,6 +1,13 @@
 function dqdt = diffEq(Time, state, par)
 % DIFFEQ represents the differencial equation to solve
+% 
+% Inputs:
+%   Time = Time from start of calculation
 %   state = [x, y, z, x_dot, y_dot, z_dot]
+%   par = all parameters
+% 
+% Outputs:
+%   dqdt = [x_dot, y_dot, z_dot, acc_x, acc_y, acc_z]
 % 
     
     % retrieving parameter
@@ -13,9 +20,7 @@ function dqdt = diffEq(Time, state, par)
     % Two body acceleration
     acc = -r.*(mu/norm_r^3);
     
-    % Time increments
-    T = (par.Orb_elem0.utc_jd-2451545+(Time/86400))/36525;
-    
+
     % J2 component (if activated)
     if par.ENABLE_J2
         % to take convert to ECEF frame (because potential in that frame),
@@ -40,11 +45,22 @@ function dqdt = diffEq(Time, state, par)
     end
 
     % Drag component (if activated)
+    % Time increments
+    T = (par.Orb_elem0.utc_jd-2451545+(Time/86400))/36525;
+
     if par.ENABLE_DRAG
+        % calculate the atmosphere density
         rho = harris_priester(r,par,T);
+        
+        % extract speed from state variable
         v_sat = state(4:6);
+        
+        % compute drag force
         drag = -0.5*norm(v_sat)*v_sat*rho*par.prop.A*par.prop.CD;
-        acc = acc + drag/par.prop.MASS;
+        acc_drag = drag/par.prop.MASS;
+
+        % adding contribution
+        acc = acc + acc_drag;
     end
     
     % Return derivative vectors

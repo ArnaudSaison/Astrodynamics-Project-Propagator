@@ -1,15 +1,33 @@
 function rho = harris_priester(r, par ,T)
-    % rho send the resulting density following Harris-Priester model
+    % harris_priester calculate the density depending on position and
+    % altitude
+    % 
+    % Inputs:
+    %   r = position [x, y, z]
+    %   par = all parameters
+    %   T = precalculated time for Harris-Priester calculation
+    % 
+    % Outputs:
+    %   rho =  density
+    % 
+
     % Orbital parameters of the sun
     epsilon = deg2rad(23.43929111);          % rad
-    M = mod(357.5256+35999.049*T,360);       % deg
+    M = 357.5256+35999.049*T;
+    % M = mod(357.5256+35999.049*T,360);       % deg
 
-    Ecliptic_Lon = mod(par.pdata.sun.omega_o + deg2rad(M) + 6892/3600*sin(deg2rad(M)) ...
+    Lambda_sun = mod(par.pdata.sun.omega_o + deg2rad(M) + 6892/3600*sin(deg2rad(M)) ...
         + 72/3600*sin(deg2rad(2*M)) + deg2rad(1.972)*T,2*pi);       % rad
     
-    RA = atan2(cos(epsilon)*sin(Ecliptic_Lon),cos(Ecliptic_Lon));   % rad
-    SD = asin(sin(deg2rad(-23.44))*sin(Ecliptic_Lon));              % rad
+    % Sun right ascension
+    %RA = atan2(cos(epsilon)*sin(Lambda_sun),cos(Lambda_sun));   % rad
+    RA = atan(cos(epsilon)*sin(Lambda_sun)/cos(Lambda_sun)); % rad
 
+    % Sun declination
+    % SD = asin(sin(deg2rad(-23.44))*sin(Lambda_sun));              % rad
+    SD = asin(sin(epsilon)*sin(Lambda_sun)); % rad
+
+    % unit vector of the apex diurnal
     u_b = [cos(SD)*cos(RA+par.pdata.sun.lag)...
           ,cos(SD)*sin(RA+par.pdata.sun.lag)...
           ,sin(SD)];
@@ -20,7 +38,8 @@ function rho = harris_priester(r, par ,T)
     angle_vector_bulge = (0.5+(r'*u_b')/(2*norm_r))^(n/2);
 
     h = norm_r-par.pdata.earth.radius;
-
+    
+    % select the right atmo height
     for n = drange(1:48-1) 
         if  h < par.pdata.atmo(n+1,1) & h > par.pdata.atmo(n,1)
             h = [par.pdata.atmo(n,1),h,par.pdata.atmo(n+1,1)];
@@ -29,9 +48,11 @@ function rho = harris_priester(r, par ,T)
         end
     end
     
+    % Scale height
     H_mi = (h(1)-h(3))/(log(rho_m(3)/rho_m(1)));
     H_Mi = (h(1)-h(3))/(log(rho_M(3)/rho_M(1)));
-    
+
+    % Calculate the min and max density for the selected height
     rho_m(2) = rho_m(1)*exp((h(1)-h(2))/H_mi);
     rho_M(2) = rho_M(1)*exp((h(1)-h(2))/H_Mi);
 
