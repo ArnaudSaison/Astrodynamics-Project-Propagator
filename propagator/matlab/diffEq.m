@@ -54,9 +54,10 @@ function dqdt = diffEq(Time, state, par)
         
         % extract speed from state variable
         v_sat = state(4:6);
+        v_rel = v_sat - cross(par.pdata.earth.atm_rot',r);
         
         % compute drag force
-        drag = -0.5*norm(v_sat)*v_sat*rho*par.prop.A*par.prop.CD;
+        drag = -0.5*norm(v_rel)*v_rel*rho*par.prop.A*par.prop.CD;
         acc_drag = drag/par.prop.MASS;
 
         % adding contribution

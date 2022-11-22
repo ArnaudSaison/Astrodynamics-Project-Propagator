@@ -12,19 +12,16 @@ function rho = harris_priester(r, par ,T)
     % 
 
     % Orbital parameters of the sun
-    epsilon = deg2rad(23.43929111);          % rad
-    M = 357.5256+35999.049*T;
-    % M = mod(357.5256+35999.049*T,360);       % deg
+    epsilon = deg2rad(23.43929111);         % rad
+    M = 357.5256+35999.049*T;               % deg
 
-    Lambda_sun = mod(par.pdata.sun.omega_o + deg2rad(M) + 6892/3600*sin(deg2rad(M)) ...
-        + 72/3600*sin(deg2rad(2*M)) + deg2rad(1.972)*T,2*pi);       % rad
+    Lambda_sun = deg2rad(mod(rad2deg(par.pdata.sun.omega_o) + M + 6892/3600*sind(M) ...
+        + 72/3600*sind(2*M) + 1.972*T,360));       % rad
     
     % Sun right ascension
-    %RA = atan2(cos(epsilon)*sin(Lambda_sun),cos(Lambda_sun));   % rad
-    RA = atan(cos(epsilon)*sin(Lambda_sun)/cos(Lambda_sun)); % rad
+    RA = atan2(cos(epsilon)*sin(Lambda_sun),cos(Lambda_sun));   % rad
 
     % Sun declination
-    % SD = asin(sin(deg2rad(-23.44))*sin(Lambda_sun));              % rad
     SD = asin(sin(epsilon)*sin(Lambda_sun)); % rad
 
     % unit vector of the apex diurnal
