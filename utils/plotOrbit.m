@@ -1,35 +1,6 @@
-function [ECEF_out, LLA_out, fig_ax] = plotOrbit(par, time_in, ECI, comparison)
+function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA)
 % PLOTORBIT Represents the orbit in different ways
 %   
-    
-    %% Conversion to ECEF
-    time_vec = time_conversion(time_in, par.Orb_elem0.utc_jd);
-
-    % ECEF_out only contains the conversion from ECI
-    % ECEF also contains the comparison
-    if nargin == 4
-        % adding comparison
-        time_vec_2 = [time_vec; [NaN, NaN, NaN, NaN, NaN, NaN]; time_vec];
-        ECI = [ECI; [NaN, NaN, NaN, NaN, NaN, NaN]; comparison];
-        
-        % converting to ECEF
-        ECEF = ECEF_conversion(par, ECI, time_vec_2);
-
-        % output can't contain comparison
-        ECEF_out = ECEF(1:size(time_vec, 1), :);
-
-    else
-        % no comparison
-        time_vec = time_conversion(time_in, par.Orb_elem0.utc_jd);
-        ECEF = ECEF_conversion(par, ECI, time_vec);
-        ECEF_out = ECEF;
-
-    end
-
-    %% Converting to LLA
-    % finding lla (latitude longitude altitude)
-    % /!\ S3L ouputs altitude longitude latitude
-    LLA_out = ecef2lla(ECEF_out);
     
     %% Using the groundtrack function
     grdtrk(ECEF(:,1:3), time_vec);
@@ -48,43 +19,14 @@ function [ECEF_out, LLA_out, fig_ax] = plotOrbit(par, time_in, ECI, comparison)
     end
     
     %% 3D plot ECEF
-    plot_3D(par.pdata.earth.radius, ECEF_out, 'ECEF', time_vec);
+    plot_3D(par.pdata.earth.radius, ECEF, 'ECEF', time_vec);
     fig_ax.plot_3D = gca;
 
     if par.PRINT_PDF
         fig2pdf(gcf, '3D_plot_ECEF', 2, 1.5, par.PDF_FOLDER)
     end
 
-end
-
-function vec = time_conversion(time, jd)
-% TIME_CONVERSION 
-%
-
-    time_jd = time /86400 + jd; % adding epoch
-    dt = datetime(time_jd, 'ConvertFrom', 'juliandate', 'TimeZone', 'UTC'); % to UTC vec
-    vec = datevec(dt); % eci2ecef only takes vectors
-
-end
-
-function ECEF_converted = ECEF_conversion(par, ECI, time_vec)
-% ECEF_CONVERTED 
-%
-
-    if par.DEBUG
-        disp('Converting result to ECEF... (this operation is very slow)')
-    end
+    %% plot of the orbital elements
+    plotOE(par, time, time_vec, OE, LLA); % (prints to pdf included)
     
-    tic
-    ECEF_converted = zeros(size(time_vec, 1), 3);
-    for i = 1:size(time_vec, 1)
-        if ~isnan(time_vec(i,:))
-            r = eci2ecef(time_vec(i,:), ECI(i,1:3));
-            ECEF_converted(i,:) = r'; % contains both position and velocity
-        else
-            ECEF_converted(i,:) = [NaN, NaN, NaN];
-        end
-    end
-    toc
-
 end

@@ -12,7 +12,7 @@ function plot_3D(earth_radius, stateout, type, time_vec)
     zout = stateout(:,3);
     
     % Plot 3D
-    fig = figure('Name', '3D plot');
+    fig = figure('Name', '3D plot', 'WindowStyle', 'docked');
     set(fig,'color','white');
     plot3(xout, yout, zout,'r-', 'LineWidth', 1, ...
           'DisplayName', 'orbit');
