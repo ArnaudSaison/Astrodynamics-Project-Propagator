@@ -74,7 +74,6 @@ ylabel('Argument of periapsis \omega [deg]')
 xlabel('Time')
 xticksCustomDate();
 ylim([0, 360])
-yticks(0:45:360);
 betterYLim(OE.omega, 0.1, 0, 360);
 
 if par.PRINT_PDF

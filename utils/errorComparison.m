@@ -2,6 +2,10 @@ function errorComparison(par, time, time_vec, ECI, LLA, ECI2, LLA2)
 % ERRORCOMPARISON computes and plots difference between inputs
 %
 
+% figures dimensions
+fig_size = 1.5;
+fig_AR = 1.5;
+
 %% relative difference in ECI
 % diff_rel_eci = [abs((ECI(:,1) - ECI2(:,1))./ECI2(:,1)), ...
 %                 abs((ECI(:,2) - ECI2(:,2))./ECI2(:,2)), ...
@@ -25,11 +29,11 @@ ylabel('Distance error [m]')
 xlabel('Time')
 legend({'x', 'y', 'z', 'norm'}, ...
        'Location','southwest')
-xtickangle(0);
+xtickangle(90);
 xticksCustomDate();
 
 if par.PRINT_PDF
-    fig2pdf(gcf, 'error_abs_ECI', 1, 1.5, par.PDF_FOLDER)
+    fig2pdf(gcf, 'error_abs_ECI', fig_size, fig_AR, par.PDF_FOLDER)
 end
 
 %% absolute difference in LLA (latitude longitude altitude)
@@ -51,31 +55,34 @@ for i = 1:size((diff_abs_lla(:,2)), 1)
     end
 end
 
-figure('Name', 'Absolute difference in LLA', 'WindowStyle', 'docked')
+figure('Name', 'Absolute difference in Altitude', 'WindowStyle', 'docked')
 % for the altitude
-subplot(2,1,1) 
 plot(datetime(time_vec), diff_abs_lla(:,3)); hold on;
 %plotDayLines(time(end))
 grid on
 ylabel('Altitude error [m]')
 %xlabel('Time')
 legend({'altitude'})
-xtickangle(0);
+xtickangle(90);
 xticksCustomDate();
 
+if par.PRINT_PDF
+    fig2pdf(gcf, 'error_abs_LLA_alt', fig_size, fig_AR, par.PDF_FOLDER)
+end
+
+figure('Name', 'Absolute difference in LongLat', 'WindowStyle', 'docked')
 % for lat and long
-subplot(2,1,2)
 plot(datetime(time_vec), diff_abs_lla(:,1:2)); hold on;
 %plotDayLines(time(end))
 grid on
 ylabel('Error [°]')
 xlabel('Time')
-legend({'lat', 'long'})
-xtickangle(0);
+legend({'lat', 'long'}, 'Location', 'northwest')
+xtickangle(90);
 xticksCustomDate();
 
 if par.PRINT_PDF
-    fig2pdf(gcf, 'error_abs_LLA', 1, 1.5, par.PDF_FOLDER)
+    fig2pdf(gcf, 'error_abs_LLA_LongLat', fig_size, fig_AR, par.PDF_FOLDER)
 end
 
 

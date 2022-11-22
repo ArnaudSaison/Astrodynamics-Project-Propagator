@@ -37,6 +37,7 @@ function dqdt = diffEq(Time, state, par)
 
         % adding contribution
         acc = acc + acc_J2;
+
     end
 
     % Drag component (if activated)
