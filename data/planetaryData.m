@@ -30,7 +30,7 @@ earth.atm_rot = [0,0,72.9211e-6];   % [rad/s]
 % output
 pdata.earth = earth;
 pdata.sun = sun;
-pdata.atmo =   [100000,4.974e-7,4.974e-7;
+pdata.atmo =   [100000,4.974e-7,4.974e-7; ... % Harris priester data
                 120000,2.490e-8,2.490e-8;
                 130000,8.377e-9,8.710e-9;
                 140000,3.899e-9,4.059e-9;

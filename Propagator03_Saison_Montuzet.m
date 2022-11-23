@@ -28,7 +28,7 @@
 % folder of the project. Doing otherwise will cause naming conflicts.
 clc; close all; clear;          % cleaning up
 
-path.gator = char(join({'./data', './propagator/matlab', './utils', './parameters', './figures'}, ':'));
+path.gator = char(join({'./data', './propagator/matlab', './utils', './parameters', './figures'}, ';'));
 path.S3L = genpath('./S3Lprop_v1_21');
 
 restoredefaultpath              % restores path
@@ -94,7 +94,7 @@ end
             'm',  par.prop.MASS, ...
             'Sd', par.prop.A, ...
             'nHP', 2, ...
-            'density', 1, ...
+            'density', 1, ...                   % Harris Priester models
             'ecef', [1, 1, 1, 0], ...
             'ODE113', 1);
 
