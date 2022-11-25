@@ -1,6 +1,12 @@
 function [ECEF, LLA, OE, time_vec] = ECI2ECEF2LLA2OE(ECI, time, par)
 %ECI2ECEF2LLA2OE does all the conversoins from ECI
-%   
+%
+% Inputs:
+%   ECI = [x, y, z, x_dot, y_dot, z_dot] (only the first 3 columns are
+%       required) where each is a column vector
+%   time = column vector of times [s] corresponding to positions
+%   par = parameters structure as defined by 'processParam.m'
+%
 
 %% time
 if par.DEBUG

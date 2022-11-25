@@ -1,4 +1,4 @@
-function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA)
+function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
 % PLOTORBIT Represents the orbit in different ways
 %   
     

@@ -1,4 +1,4 @@
-function plotOE(par, time, time_vec, OE, LLA)
+function plotOE(par, time, time_vec, OE, LLA, AN)
 %PLOTOE plots the orbital elements
 %   
 
@@ -107,7 +107,6 @@ betterYLim(OE.a /1000, 0.1, par.pdata.earth.radius /1000, 1e20);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_a', fig_size, fig_AR, par.PDF_FOLDER)
 end
-
 
 %% Altitude
 figure('Name', 'Altitude', 'WindowStyle', 'docked');

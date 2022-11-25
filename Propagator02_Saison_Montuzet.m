@@ -95,6 +95,7 @@ end
 
 warning on;
 
+
 %% Resetting path
 restoredefaultpath              % restores path
 addpath(path.gator);
@@ -106,23 +107,24 @@ disp(['<strong>Keplerian Elements after ', num2str(par.T_END /24/3600, '%.2f'), 
 dispKeplerian(OE.i(end), OE.RAAN(end), OE.ecc(end), OE.omega(end), OE.theta(end), OE.a(end));
 dispLine('=');
 
+
 %% Question 2.4: Analytical formulas (deg/day)
-Raan_dot_avg = -(1.5*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
+AN.RAAN_dot_avg = -(1.5*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
     / (((1-par.Orb_elem0.ecc^2)^2)*par.Orb_elem0.a^3.5))*cos(deg2rad(par.Orb_elem0.i)) /pi*180*86400;
 
-Omega_dot_avg = (0.75*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
+AN.Omega_dot_avg = (0.75*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
     / (((1-par.Orb_elem0.ecc^2)^2)*par.Orb_elem0.a^3.5))*(4-5*sin(deg2rad(par.Orb_elem0.i))^2) /pi*180*86400;
 
 
 disp(['<strong>Analytical Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
 dispLine();
-disp(['Raan dot average [deg/day]    | ', num2str(Raan_dot_avg, '%-12.2f')])
-disp(['Omega dot average [deg/day]   | ', num2str(Omega_dot_avg, '%-12.2f')])
+disp(['RAAN dot average [deg/day]    | ', num2str(AN.RAAN_dot_avg, '%-12.2f')])
+disp(['Omega dot average [deg/day]   | ', num2str(AN.Omega_dot_avg, '%-12.2f')])
 dispLine('=');
 
 
 %% Question -: Representing orbit
-[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA);
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
 %% Comparing

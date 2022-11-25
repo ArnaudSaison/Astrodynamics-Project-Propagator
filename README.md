@@ -19,18 +19,22 @@
 **Academic year**: 2022-2023 \
 **Course**: AERO0024-1 Astrodynamics
 
-Essential Tasks
-- [ ] résoudre équation du mouvement
-    - [ ] trouver un solver adéquat
-    - [ ] visualisation avec code du prof 
-    - [ ] tests avec iss
-    - [ ] conversions
-- [ ] ajouter contribution J2
-- [ ] test avec un autre satellite (Hubble)
+Tests:
+- [ ] compare propagator result with actual TLEs
+    - plot everything on ECI asolute error
+- [ ] study sensibility of propagator to parameters
+    - find parameters that have influence
+    - find uncertainty on these parameters
 
-Optional Tasks
-- [ ] ajouter d'autres contributions que J2
-- [ ] visualisation 3D
+Plots:
+- [ ] plot numeric and analytic results on same graph: RAAN, omega
+- [ ] cross-track, along-track errors
+
+References:
+- send all references for bibliography
+
+Question 4:
+- [ ] find interesting orbit
 
 Question
 - Quelles fonctions MATLAB est-ce qu'on peut utiliser ?
