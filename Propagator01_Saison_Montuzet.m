@@ -95,6 +95,17 @@ end
 
 warning on;
 
+%% Analytical formulas
+
+h = norm(par.ECI0(1:3))*norm(par.ECI0(4:6)); % angular momentum
+periapse = h^2/(par.pdata.earth.mu*(1+par.Orb_elem0.ecc));      % m
+apoapse =  h^2/(par.pdata.earth.mu*(1-par.Orb_elem0.ecc));      % m
+T = 2*pi*sqrt(par.Orb_elem0.a^3/par.pdata.earth.mu);            % seconds
+
+disp('<strong>Analytical Elements')
+disp(['Periapse  [m]       | ', num2str(periapse, '%-12.2f')])
+disp(['Apoapsis  [m]       | ', num2str(apoapse, '%-12.2f')])
+disp(['Orbital period [s]  | ', num2str(T, '%-12.2f')])
 
 %% Resetting path
 restoredefaultpath              % restores path
