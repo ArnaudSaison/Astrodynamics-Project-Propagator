@@ -15,7 +15,7 @@ function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
     fig_ax.plot_3D = gca;
 
     if par.PRINT_PDF
-        fig2pdf(gcf, '3D_plot_ECI', 2, 1.5, par.PDF_FOLDER)
+        fig2pdf(gcf, '3D_plot_ECI', 2, 0.9, par.PDF_FOLDER)
     end
     
     %% 3D plot ECEF
@@ -23,7 +23,7 @@ function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
     fig_ax.plot_3D = gca;
 
     if par.PRINT_PDF
-        fig2pdf(gcf, '3D_plot_ECEF', 2, 1.5, par.PDF_FOLDER)
+        fig2pdf(gcf, '3D_plot_ECEF', 2, 0.9, par.PDF_FOLDER)
     end
 
     %% plot of the orbital elements

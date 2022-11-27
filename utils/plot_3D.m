@@ -38,7 +38,7 @@ function plot_3D(earth_radius, stateout, type, time_vec)
     hold on;
 
     % legend and labels
-    legend();
+    legend('Location', 'northoutside');
     xlabel('x [m]');
     ylabel('y [m]');
     zlabel('z [m]');
