@@ -116,7 +116,8 @@ ECI = [r_ijk', v_ijk'];
 
 % juliandate where month is set to 0 to force matlab to convert only the 
 % year + days and decimals
-jd = juliandate(TLE.epoch_year, 0, TLE.epoch_day);
+jd = juliandate(TLE.epoch_year, 1, 0);
+jd = jd + TLE.epoch_day;
 
 % Conversion to datetime object which can be easily used afterwards
 dt = datetime(jd, 'ConvertFrom', 'juliandate', 'TimeZone', 'UTC');

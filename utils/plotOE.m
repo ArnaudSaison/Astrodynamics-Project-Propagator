@@ -99,7 +99,7 @@ end
 figure('Name', 'OE: a', 'WindowStyle', 'docked');
 plot(datetime(time_vec), OE.a /1000, 'Color', line_color)
 xtickangle(90);
-ylabel('Semi major axis [km]')
+ylabel('Semi-major axis [km]')
 xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.a /1000, 0.1, par.pdata.earth.radius /1000, 1e20);
