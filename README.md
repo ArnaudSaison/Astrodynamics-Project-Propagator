@@ -39,3 +39,5 @@ Question 4:
 Question
 - Quelles fonctions MATLAB est-ce qu'on peut utiliser ?
 - Est-ce qu'il faut une visualisation 3D ?
+
+Credits: ASCII Art by Shanaka Dias from https://www.asciiart.eu/animals/reptiles/alligators
