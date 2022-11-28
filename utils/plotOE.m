@@ -1,4 +1,4 @@
-function plotOE(par, time, time_vec, OE, LLA, AN)
+function [fig_ax] = plotOE(par, time, time_vec, OE, LLA, AN)
 %PLOTOE plots the orbital elements
 %   
 
@@ -39,6 +39,7 @@ betterYLim(OE.i - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 90);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_i', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.i = gca;
 
 %% RAAN
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.RAAN);
@@ -55,6 +56,7 @@ betterYLim(OE.RAAN - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_RAAN', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.RAAN = gca;
 
 %% Eccentricity
 [isCst_temp, middle_temp] = plotConstant(OE.ecc, 1e-3);
@@ -70,6 +72,7 @@ betterYLim(OE.ecc - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 1, 1);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_ecc', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.ecc = gca;
 
 %% Argument of perigee (omega)
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.omega);
@@ -87,6 +90,7 @@ betterYLim(OE.omega - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_omega', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.omega = gca;
 
 %% True anomaly (theta)
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.theta);
@@ -104,6 +108,7 @@ yticks(0:45:360);
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_theta', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.theta = gca;
 
 %% Semi major axis
 [isCst_temp, middle_temp] = plotConstant(OE.a /1000, 1e-3);
@@ -119,6 +124,7 @@ betterYLim(OE.a /1000 - middle_temp * isCst_temp, 0.1, par.pdata.earth.radius /1
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_a', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.a = gca;
 
 %% Altitude
 figure('Name', 'Altitude', 'WindowStyle', 'docked');
@@ -132,6 +138,7 @@ betterYLim(LLA(:,3) /1000, 0.1, 0, 1e20);
 if par.PRINT_PDF
     fig2pdf(gcf, 'altitude', fig_size, fig_AR, par.PDF_FOLDER)
 end
+fig_ax.altitude = gca;
 
 end
 

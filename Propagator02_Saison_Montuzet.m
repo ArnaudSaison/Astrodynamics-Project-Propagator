@@ -127,6 +127,7 @@ dispLine('=');
 [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
+
 %% Comparing
 errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
 

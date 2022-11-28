@@ -21,12 +21,12 @@ function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
     %% 3D plot ECEF
     plot_3D(par.pdata.earth.radius, ECEF, 'ECEF', time_vec);
     fig_ax.plot_3D = gca;
-
+    
     if par.PRINT_PDF
         fig2pdf(gcf, '3D_plot_ECEF', 2, 0.9, par.PDF_FOLDER)
     end
 
     %% plot of the orbital elements
-    plotOE(par, time, time_vec, OE, LLA); % (prints to pdf included)
+    fig_ax.OE = plotOE(par, time, time_vec, OE, LLA); % (prints to pdf included)
     
 end
