@@ -102,10 +102,15 @@ periapse = h^2/(par.pdata.earth.mu*(1+par.Orb_elem0.ecc));      % m
 apoapse =  h^2/(par.pdata.earth.mu*(1-par.Orb_elem0.ecc));      % m
 T = 2*pi*sqrt(par.Orb_elem0.a^3/par.pdata.earth.mu);            % seconds
 
+for i=1:721
+    Alt(i) = norm(ECI(i,1:3));
+end
+minAlt = min(Alt);
+maxAlt = max(Alt);
 disp('<strong>Analytical Elements')
 disp(['Periapse  [m]       | ', num2str(periapse, '%-12.2f')])
 disp(['Apoapsis  [m]       | ', num2str(apoapse, '%-12.2f')])
-disp(['Orbital period [s]  | ', num2str(T, '%-12.2f')])
+disp(['Orbital period [s]  | ', num2str(T/60, '%-12.2f')])
 
 %% Resetting path
 restoredefaultpath              % restores path
