@@ -32,7 +32,7 @@ par.prop.A = 1641;              % [m^2] object area
 
 % Simulation parameters
 par.SOLVER = 'ODE113';          % [str] solver used for propagation can 
-                                %       be: ODE45, ODE113
+                                %       be: ODE45, ODE78, ODE113
 par.N_STEP = 1*24*60/2;         % [#] number of step in the simulation
 par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-10;            % [?] relative tolerance
@@ -42,7 +42,5 @@ par.ABS_TOL = 1e-10;            % [?] absolute tolerance
 par.DEBUG = 1;                  % additional information during execution
 
 % Representation options
-par.PLOT_BOTH_TRACKS = 1;       % 1 = when comparing orbits, plots both on 
-                                % same groundtrack / 0 = only propagated
 par.PRINT_PDF = 0;              % prints figures to PDF in the figures folder
 par.PDF_FOLDER = 'figures/3_';  % folder in which PDF figures are saved
