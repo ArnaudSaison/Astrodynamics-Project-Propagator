@@ -69,7 +69,7 @@ elem.omega = str2double(L2(35:42)); % [deg]
 elem.M = str2double(L2(44:51));
 
 % True anomaly
-elem.theta = mean2trueAnomaly(elem.M, elem.ecc);
+elem.theta = mean2trueAnomaly(par, elem.M, elem.ecc);
 
 % Mean motion
 elem.rev_per_day = str2double(L2(53:63));  

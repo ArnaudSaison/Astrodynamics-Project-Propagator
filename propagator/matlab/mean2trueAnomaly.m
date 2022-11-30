@@ -1,12 +1,13 @@
-function [theta] = mean2trueAnomaly(meanAno, ecc)
+function [theta] = mean2trueAnomaly(par, meanAno, ecc)
 %MEAN2TRUEANOMALY converts mean anomaly to true anomaly
 %
 
-disp('Converting mean anomaly to true anomaly...')
+if par.DEBUG, disp('Converting mean anomaly to true anomaly...'); end
+options = optimset('Display','off');
 
 % Eccentric anomaly
 eccAno =@(x) x - ecc * sin(x) - deg2rad(meanAno);
-E = fsolve(eccAno, 0);
+E = fsolve(eccAno, 0, options);
 
 % defining the relation between true anomaly and mean anomaly
 % trueAno =@(x) 2 * atan(sqrt((1 - ecc)/(1 + ecc)) * tan(x / 2)) - E;
