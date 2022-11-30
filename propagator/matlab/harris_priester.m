@@ -1,5 +1,5 @@
 function rho = harris_priester(r, par ,T)
-    % harris_priester calculate the density depending on position and
+    % harris_priester calculates the density depending on position and
     % altitude
     % 
     % Inputs:
