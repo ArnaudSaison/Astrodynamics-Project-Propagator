@@ -22,6 +22,7 @@ sun.lag = 30*pi/180;                % [rad] lag
 earth.name = 'Earth';               % [str] name
 earth.mass = 5.972e24;              % [kg] mass
 earth.mu = 3.986004418e14;          % [m^3.s^-2] gravitational parameter
+%        ± 0.000000008e14
 earth.radius = 6378.137e3;          % [m] radius
 earth.J2 = 1.08262668e-3;           % [-] J2 coefficient
 %earth.J2 = 1.082626173852e-3;           % [-] J2 coefficient
