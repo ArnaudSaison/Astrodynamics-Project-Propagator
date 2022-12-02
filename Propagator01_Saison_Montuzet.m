@@ -157,8 +157,20 @@ end
 
 warning on;
 
-%% Analytical formulas
+S3L.geodetic(:,1:3) = S3L.geodetic(:,flip(1:3)); % S3L uses alt-lat-long which is not standard
 
+
+%% Resetting path
+restoredefaultpath              % restores path
+addpath(path.gator);
+
+% conversions
+S3L.ECI = S3L.cartesian;
+S3L.time = S3L.t;
+[S3L.ECEF, S3L.LLA, S3L.OE, S3L.time_vec] = ECI2ECEF2LLA2OE(S3L.ECI, S3L.time, par);
+
+
+%% Analytical formulas
 h = norm(par.ECI0(1:3))*norm(par.ECI0(4:6)); % angular momentum
 periapse = h^2/(par.pdata.earth.mu*(1+par.Orb_elem0.ecc));      % m
 apoapse =  h^2/(par.pdata.earth.mu*(1-par.Orb_elem0.ecc));      % m
@@ -169,14 +181,12 @@ for i=1:721
 end
 minAlt = min(Alt);
 maxAlt = max(Alt);
-disp('<strong>Analytical Elements')
+dispLine('=');
+disp('<strong>Analytical Elements</strong>')
+dispLine('-');
 disp(['Periapse  [m]       | ', num2str(periapse, '%-12.2f')])
 disp(['Apoapsis  [m]       | ', num2str(apoapse, '%-12.2f')])
 disp(['Orbital period [s]  | ', num2str(T/60, '%-12.2f')])
-
-%% Resetting path
-restoredefaultpath              % restores path
-addpath(path.gator);
 
 
 %% Question 1.3: propagated ISS position after 24h
@@ -191,5 +201,5 @@ dispLine('=');
 
 
 %% Comparing
-errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
+errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 

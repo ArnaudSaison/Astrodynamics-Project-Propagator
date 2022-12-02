@@ -95,10 +95,17 @@ end
 
 warning on;
 
+S3L.geodetic(:,1:3) = S3L.geodetic(:,flip(1:3)); % S3L uses alt-lat-long which is not standard
+
 
 %% Resetting path
 restoredefaultpath              % restores path
 addpath(path.gator);
+
+% conversions
+S3L.ECI = S3L.cartesian;
+S3L.time = S3L.t;
+[S3L.ECEF, S3L.LLA, S3L.OE, S3L.time_vec] = ECI2ECEF2LLA2OE(S3L.ECI, S3L.time, par);
 
 
 %% Question 2.3: propagated ISS position after 24h
@@ -115,9 +122,9 @@ AN.RAAN_dot_avg = -(1.5*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.ea
 AN.Omega_dot_avg = (0.75*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
     / (((1-par.Orb_elem0.ecc^2)^2)*par.Orb_elem0.a^3.5))*(4-5*sin(deg2rad(par.Orb_elem0.i))^2) /pi*180*86400;
 
-
+dispLine('=');
 disp(['<strong>Analytical Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
-dispLine();
+dispLine('-');
 disp(['RAAN dot average [deg/day]    | ', num2str(AN.RAAN_dot_avg, '%-12.2f')])
 disp(['Omega dot average [deg/day]   | ', num2str(AN.Omega_dot_avg, '%-12.2f')])
 dispLine('=');
@@ -127,7 +134,6 @@ dispLine('=');
 [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
-
 %% Comparing
-errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
+errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 

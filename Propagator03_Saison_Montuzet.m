@@ -100,10 +100,17 @@ end
 
 warning on;
 
+S3L.geodetic(:,1:3) = S3L.geodetic(:,flip(1:3)); % S3L uses alt-lat-long which is not standard
+
 
 %% Resetting path
 restoredefaultpath              % restores path
 addpath(path.gator);
+
+% conversions
+S3L.ECI = S3L.cartesian;
+S3L.time = S3L.t;
+[S3L.ECEF, S3L.LLA, S3L.OE, S3L.time_vec] = ECI2ECEF2LLA2OE(S3L.ECI, S3L.time, par);
 
 
 %% Question 3.3: propagated ISS position after 24h
@@ -118,7 +125,8 @@ dispLine('=');
 
 
 %% Comparing
-errorComparison(par, time, time_vec, ECI, LLA, S3L.cartesian, S3L.geodetic)
+errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
+
 
 %% Question 3.4: Analytical formulas (m/day)
 rho = (1.558e-12+5.684e-12)/2;
