@@ -22,7 +22,7 @@ nb_lines = size(all_lines, 1);
 %% Parsing TLEs
 TLEs = [];
 
-for l = 1:3:nb_lines-3
+for l = 1:3:nb_lines-3+1
     % extracting lines
     L0 = all_lines(l,   3:end);
     L1 = all_lines(l+1, 1:end);
