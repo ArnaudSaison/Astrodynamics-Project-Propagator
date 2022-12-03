@@ -28,7 +28,7 @@ function dqdt = diffEq(Time, state, par)
         J2_time_vec = datevec(J2_dt); % eci2ecef only takes vectors
 
         % reference frame conversion to ECEF
-        r_ECEF = eci2ecef(J2_time_vec, r);
+        r_ECEF = eci2ecef(J2_dt, r);
         norm_r_ECEF = norm(r_ECEF); % new norm
     end
 
@@ -40,7 +40,7 @@ function dqdt = diffEq(Time, state, par)
         acc_J2 = 3/2 * mu * par.pdata.earth.J2 * (par.pdata.earth.radius/norm_r_ECEF)^2 * r_ECEF .* [temp1; temp1; temp1 - 2/norm_r_ECEF^3];
         
         % back to ECI reference frame
-        acc_J2 = ecef2eci(J2_time_vec, acc_J2);
+        acc_J2 = ecef2eci(J2_dt, acc_J2);
 
         % adding contribution
         acc = acc + acc_J2;

@@ -24,9 +24,9 @@ if par.DEBUG
 end
 
 tic
-ECEF = zeros(size(time_vec, 1), 3);
-for i = 1:size(time_vec, 1)
-    r = eci2ecef(time_vec(i,:), ECI(i,1:3));
+ECEF = zeros(size(dt, 1), 3);
+for i = 1:size(dt, 1)
+    r = eci2ecef(dt(i,:), ECI(i,1:3));
     ECEF(i,:) = r'; % contains both position and velocity
 end
 toc
@@ -42,14 +42,12 @@ end
 
 %% LLA
 % finding lla (latitude longitude altitude)
-% /!\ S3L ouputs altitude longitude latitude
 
 if par.DEBUG
     disp('Converting to Lat Long Alt...')
 end
 
 LLA = ecef2lla(ECEF);
-
 
 end
 

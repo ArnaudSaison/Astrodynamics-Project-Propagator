@@ -3,8 +3,9 @@ function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
 %   
     
     %% Using the groundtrack function
-    grdtrk(ECEF(:,1:3), time_vec);
+    LLA_grdtrk = grdtrk(ECEF(:,1:3), time_vec);
     fig_ax.ground_track = gca;
+    fig_ax.LLA_grdtrk = LLA_grdtrk;
 
     if par.PRINT_PDF
         fig2pdf(gcf, 'ground_track', 1.5, 1.5, par.PDF_FOLDER)

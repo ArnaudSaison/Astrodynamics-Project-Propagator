@@ -1,4 +1,4 @@
-function grdtrk(xECEF, time_vec)
+function LLA = grdtrk(xECEF, time_vec)
 % GRDTRK plots the ground track
 % 
 % This function display the ground track of the spacecraft.
@@ -22,6 +22,8 @@ end
 LAT = rad2deg(LAT);
 LON = rad2deg(LON);
 Hgdtrk = H * 1e-3;
+
+LLA = [LAT, LON, H];
 
 % Find discontinuites
 N = length(LAT);
