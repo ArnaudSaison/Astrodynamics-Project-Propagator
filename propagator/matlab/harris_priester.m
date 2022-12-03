@@ -1,4 +1,4 @@
-function rho = harris_priester(r, par ,T)
+function rho = harris_priester(r, par , T, r_LLA)
     % harris_priester calculates the density depending on position and
     % altitude
     % 
@@ -31,11 +31,14 @@ function rho = harris_priester(r, par ,T)
 
     norm_r = norm(r);
 
-    n = 2; % for low inclination orbit
+    n = par.prop.n;
     angle_vector_bulge = (0.5+(r'*u_b')/(2*norm_r))^(n/2);
-
-    h = norm_r-par.pdata.earth.radius;
     
+    h = r_LLA(3);
+    
+    % all parameters below use a matrix 1x3
+    % in the form [min current max]
+
     % select the right atmo height
     for n = drange(1:48-1) 
         if  h < par.pdata.atmo(n+1,1) & h > par.pdata.atmo(n,1)

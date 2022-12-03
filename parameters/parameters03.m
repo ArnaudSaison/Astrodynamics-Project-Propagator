@@ -29,6 +29,7 @@ end
 par.prop.MASS = 410500;         % [kg] mass of object
 par.prop.CD = 2.00;             % [-] drag coefficient of the object
 par.prop.A = 1641;              % [m^2] object area
+par.prop.n = 2;                 % Harris-Priester value for low inclination orbit
 
 % Simulation parameters
 par.SOLVER = 'ODE113';          % [str] solver used for propagation can 

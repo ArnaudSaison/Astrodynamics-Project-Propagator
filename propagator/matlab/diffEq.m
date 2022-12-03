@@ -20,9 +20,7 @@ function dqdt = diffEq(Time, state, par)
     % Two body acceleration
     acc = -r.*(mu/norm_r^3);
     
-
-    % J2 component (if activated)
-    if par.ENABLE_J2
+    if par.ENABLE_J2 || par.ENABLE_DRAG
         % to take convert to ECEF frame (because potential in that frame),
         % we need the time
         J2_time_jd = Time /86400 + par.Orb_elem0.utc_jd; % adding epoch to time
@@ -32,7 +30,11 @@ function dqdt = diffEq(Time, state, par)
         % reference frame conversion to ECEF
         r_ECEF = eci2ecef(J2_time_vec, r);
         norm_r_ECEF = norm(r_ECEF); % new norm
+    end
 
+
+    % J2 component (if activated)
+    if par.ENABLE_J2
         % computating the perturbation
         temp1 = (5 * (r_ECEF(3)/norm_r_ECEF).^2 - 1)/norm_r_ECEF^3;
         acc_J2 = 3/2 * mu * par.pdata.earth.J2 * (par.pdata.earth.radius/norm_r_ECEF)^2 * r_ECEF .* [temp1; temp1; temp1 - 2/norm_r_ECEF^3];
@@ -42,16 +44,17 @@ function dqdt = diffEq(Time, state, par)
 
         % adding contribution
         acc = acc + acc_J2;
-
     end
 
     % Drag component (if activated)
     % Time increments
-    T = (par.Orb_elem0.utc_jd-2451545+(Time/86400))/36525;
+    T = (J2_time_jd-2451545)/36525;
 
     if par.ENABLE_DRAG
+        r_LLA = ecef2lla(r_ECEF');
+
         % calculate the atmosphere density
-        rho = harris_priester(r,par,T);
+        rho = harris_priester(r,par,T,r_LLA);
         
         % extract speed from state variable
         v_sat = state(4:6);
