@@ -47,10 +47,11 @@ function dqdt = diffEq(Time, state, par)
     end
 
     % Drag component (if activated)
-    % Time increments
-    T = (J2_time_jd-2451545)/36525;
 
     if par.ENABLE_DRAG
+        % Time increments
+        T = (J2_time_jd-2451545)/36525;
+
         r_LLA = ecef2lla(r_ECEF');
 
         % calculate the atmosphere density
