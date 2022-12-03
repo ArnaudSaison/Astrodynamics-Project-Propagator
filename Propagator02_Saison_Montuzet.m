@@ -122,7 +122,14 @@ AN.RAAN_dot_avg = -(1.5*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.ea
 AN.Omega_dot_avg = (0.75*sqrt(par.pdata.earth.mu)*par.pdata.earth.J2*par.pdata.earth.radius^2 ...
     / (((1-par.Orb_elem0.ecc^2)^2)*par.Orb_elem0.a^3.5))*(4-5*sin(deg2rad(par.Orb_elem0.i))^2) /pi*180*86400;
 
-dispLine('=');
+n = sqrt(par.pdata.earth.mu/par.Orb_elem0.a^3);
+p = par.Orb_elem0.a*(1-par.Orb_elem0.ecc^2);
+
+nn  = n*(1+(1.5*par.pdata.earth.J2*par.pdata.earth.radius^2/p^2)*sqrt(1-par.Orb_elem0.ecc^2)*(1-1.5*sin(deg2rad(par.Orb_elem0.i))^2));
+
+RAAN = par.Orb_elem0.RAAN - (1.5*par.pdata.earth.J2*par.pdata.earth.radius^2/p^2*cos(deg2rad(par.Orb_elem0.i)))*nn*86400;
+Omega =  par.Orb_elem0.omega + (1.5*par.pdata.earth.J2*par.pdata.earth.radius^2/p^2*(2-2.5*sin(deg2rad(par.Orb_elem0.i))^2))*nn*86400;
+
 disp(['<strong>Analytical Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
 dispLine('-');
 disp(['RAAN dot average [deg/day]    | ', num2str(AN.RAAN_dot_avg, '%-12.2f')])

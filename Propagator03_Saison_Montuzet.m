@@ -129,12 +129,16 @@ errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 
 
 %% Question 3.4: Analytical formulas (m/day)
-rho = (1.558e-12+5.684e-12)/2;
-AN.a_dot = - (sqrt(par.Orb_elem0.a*par.pdata.earth.mu)*rho*par.prop.A*par.prop.CD/par.prop.MASS)*86400;
+rho_min = (1.558e-12);
+AN.a_dot_min = - (sqrt((par.Orb_elem0.a+10000)*par.pdata.earth.mu)*rho_min*par.prop.A*par.prop.CD/par.prop.MASS)*86400;
+
+rho_max = (7.492e-12);
+AN.a_dot_max = - (sqrt((par.Orb_elem0.a-10000)*par.pdata.earth.mu)*rho_max*par.prop.A*par.prop.CD/par.prop.MASS)*86400;
 
 disp(['<strong>Analytical Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
 dispLine();
-disp(['Semi-major axis variation [m/day]    | ', num2str(AN.a_dot, '%-12.2f')])
-dispLine('=');
+disp(['Semi-major axis variation min [m/day]    | ', num2str(AN.a_dot_min, '%-12.2f')])
+disp(['Semi-major axis variation max [m/day]    | ', num2str(AN.a_dot_max, '%-12.2f')])
+dispLine('=');dispLine('=');
 
 
