@@ -15,10 +15,7 @@ par.ENABLE_J2 = 1;
 par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
-par.bulkTLEs = processBulkTLEs(par, 'bulkHSTTLEs'); % all TLEs contained in file
-
-par.TLE = bulkTLEs(1); % initial TLE
-
+par.BULKTLES_FILENAME = 'bulkHSTTLEs';
 
 % Object properties
 par.prop.MASS = 410500;         % [kg] mass of object

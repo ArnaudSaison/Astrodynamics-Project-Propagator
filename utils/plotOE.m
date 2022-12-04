@@ -11,6 +11,9 @@ line_color = 'red';
 line_color2 = 'blue';
 line_color3 = 'green';
 
+marker_color = 'black';
+marker_type = 'x';
+
 
 %% Inclination variation
 % % useful when inclination is not supposed to changed
@@ -38,6 +41,19 @@ xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.i - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 90);
 
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.i, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
+
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_i', fig_size, fig_AR, par.PDF_FOLDER)
 end
@@ -59,6 +75,19 @@ xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.RAAN - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
 
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.RAAN, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
+
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_RAAN', fig_size, fig_AR, par.PDF_FOLDER)
 end
@@ -74,6 +103,19 @@ if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.
 xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.ecc - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 1, 1);
+
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.ecc, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_ecc', fig_size, fig_AR, par.PDF_FOLDER)
@@ -97,7 +139,18 @@ xticksCustomDate();
 ylim([0, 360])
 betterYLim(OE.omega - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
 
-
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.omega, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_omega', fig_size, fig_AR, par.PDF_FOLDER)
@@ -116,6 +169,19 @@ xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.theta - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
 yticks(0:45:360);
+
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.theta, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_theta', fig_size, fig_AR, par.PDF_FOLDER)
@@ -140,6 +206,19 @@ if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.
 xlabel('Time')
 xticksCustomDate();
 betterYLim(OE.a /1000 - middle_temp * isCst_temp, 0.1, par.pdata.earth.radius /1000 - isCst_temp * 2 * par.pdata.earth.radius /1000, 1e20);
+
+% adding TLEs on plot if available (first one is skipped)
+if isfield(par, 'BULKTLES_FILENAME')
+    for i = 1:length(par.bulkTLEs)
+        plot(datetime(par.bulkTLEs(i).elem.utc_vec), ...
+             par.bulkTLEs(i).elem.a /1000, ...
+             'Marker', marker_type, ...
+             'Color', marker_color, ...
+             'MarkerFaceColor', marker_color, ...
+             'LineWidth', 2, ...
+             'LineStyle', 'none'); hold on;
+    end
+end
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_a', fig_size, fig_AR, par.PDF_FOLDER)

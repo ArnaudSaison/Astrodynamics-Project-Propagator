@@ -15,15 +15,18 @@ par.ENABLE_J2 = 1;
 par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
-statement = 1; % 1 = use project statement TLE / 0 = use latest TLE
+% statement = 1; % 1 = use project statement TLE / 0 = use latest TLE
+% 
+% if statement
+%     par.TLE.L0 = 'ISS (ZARYA)';
+%     par.TLE.L1 = '1 25544U 98067A   22290.19422747  .00014688  00000-0  26371-3 0  9990';
+%     par.TLE.L2 = '2 25544  51.6432  92.1296 0003569 315.0383 213.8529 15.50120356364100';
+% else
+%     par.TLE = getLatestTLE('ISS (ZARYA)');
+% end
 
-if statement
-    par.TLE.L0 = 'ISS (ZARYA)';
-    par.TLE.L1 = '1 25544U 98067A   22290.19422747  .00014688  00000-0  26371-3 0  9990';
-    par.TLE.L2 = '2 25544  51.6432  92.1296 0003569 315.0383 213.8529 15.50120356364100';
-else
-    par.TLE = getLatestTLE('ISS (ZARYA)');
-end
+% Intial orbit (based on TLE) (/!\ strings must be between '')
+par.BULKTLES_FILENAME = 'bulkISSTLEs';
 
 % Object properties
 par.prop.MASS = 410500;         % [kg] mass of object

@@ -18,7 +18,6 @@ par.pdata = planetaryData();
 
 % Create derived variables
 par.tspan = linspace(0, par.T_END, par.N_STEP + 1);
-[par.TLE.processed, par.Orb_elem0, par.ECI0] = processTLE(par);
 
 % Dev
 if par.DEBUG
@@ -27,6 +26,23 @@ else
     par.displ_stats = 'off';
 end
 
+% TLE
+if isfield(par, 'BULKTLES_FILENAME')
+    par.bulkTLEs = processBulkTLEs(par, par.BULKTLES_FILENAME); % all TLEs contained in file
+    TLE0 = par.bulkTLEs(1); % initial TLE
+
+    par.TLE.L0 = TLE0.L0;
+    par.TLE.L1 = TLE0.L1;
+    par.TLE.L2 = TLE0.L2;
+    par.TLE.processed = TLE0.processed;
+    par.Orb_elem0 = TLE0.elem;
+    par.ECI0 = TLE0.ECI;
+    
+else
+    [par.TLE.processed, par.Orb_elem0, par.ECI0] = processTLE(par);
+end
+
+% Output
 parOUT = par;
 
 end

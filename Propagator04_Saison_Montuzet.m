@@ -38,7 +38,7 @@ set(0,'defaultAxesFontSize', 16)
 
 
 %% Parameters
-PARAMETERS_FILE = 'parameters03';
+PARAMETERS_FILE = 'parameters04';
 run([PARAMETERS_FILE, '.m']);   % user parameters (generates structure named 'par')
 
 % processing parameters
@@ -46,7 +46,7 @@ par = processParam(par);
 dispParam(par);
 
 %% Propagating
-[time, ECI] = propagator(par);
+[time, ECI, BULK.time, BULK.ECI] = propagator(par);
 
 % conversions
 [ECEF, LLA, OE, time_vec] = ECI2ECEF2LLA2OE(ECI, time, par);
@@ -122,7 +122,19 @@ dispLine('=');
 
 
 %% Question -: Representing orbit
+AN.DRAG = 0; AN.J2 = 0;
 [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
+
+
+%% ECI error relative to TLEs
+dispLine('=');
+disp('<strong>ECI errors to TLE</strong>')
+dispLine('-');
+for i = 2:length(par.bulkTLEs)
+    disp([char(datetime(par.bulkTLEs(i).elem.utc_vec)), ...
+         '   | ', num2str(norm(par.bulkTLEs(i).ECI - BULK.ECI(i-1, :))/1000), ' km'])
+end
+dispLine('=');
 
 
 %% Comparing

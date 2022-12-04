@@ -24,12 +24,12 @@ TLEs = [];
 
 for l = 1:3:nb_lines-3+1
     % extracting lines
-    L0 = all_lines(l,   3:end);
-    L1 = all_lines(l+1, 1:end);
-    L2 = all_lines(l+2, 1:end);
+    TLE.L0 = all_lines(l,   3:end);
+    TLE.L1 = all_lines(l+1, 1:end);
+    TLE.L2 = all_lines(l+2, 1:end);
     
     % processing each TLE
-    [TLE.TLE, TLE.elem, TLE.ECI] = processTLE(par, L0, L1, L2);
+    [TLE.processed, TLE.elem, TLE.ECI] = processTLE(par, TLE.L0, TLE.L1, TLE.L2);
     
     % adding TLE to list of TLEs
     TLEs = [TLEs; TLE];
