@@ -132,7 +132,7 @@ disp('<strong>ECI errors to TLE</strong>')
 dispLine('-');
 for i = 2:length(par.bulkTLEs)
     disp([char(datetime(par.bulkTLEs(i).elem.utc_vec)), ...
-         '   | ', num2str(norm(par.bulkTLEs(i).ECI - BULK.ECI(i-1, :))/1000), ' km'])
+         '   | ', num2str(norm(par.bulkTLEs(i).ECI(1:3) - BULK.ECI(i-1, 1:3))/1000), ' m'])
 end
 dispLine('=');
 
