@@ -34,6 +34,8 @@ path.S3L = genpath('./S3Lprop_v1_21');
 restoredefaultpath              % restores path
 addpath(path.gator);            % sets path
 
+set(0,'defaultAxesFontSize', 16)
+
 
 %% Parameters
 PARAMETERS_FILE = 'parameters03';
@@ -117,6 +119,10 @@ dispLine('=');
 disp(['<strong>Keplerian Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
 dispKeplerian(OE.i(end), OE.RAAN(end), OE.ecc(end), OE.omega(end), OE.theta(end), OE.a(end));
 dispLine('=');
+
+
+%% Question -: Representing orbit
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
 %% Comparing

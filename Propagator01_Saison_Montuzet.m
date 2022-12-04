@@ -96,6 +96,8 @@ path.S3L = genpath('./S3Lprop_v1_21');
 restoredefaultpath              % restores path
 addpath(path.gator);            % sets path
 
+set(0,'defaultAxesFontSize', 16)
+
 
 %% Parameters
 PARAMETERS_FILE = 'parameters01';
@@ -171,22 +173,7 @@ S3L.time = S3L.t;
 
 
 %% Analytical formulas
-h = norm(par.ECI0(1:3))*norm(par.ECI0(4:6)); % angular momentum
-periapse = h^2/(par.pdata.earth.mu*(1+par.Orb_elem0.ecc));      % m
-apoapse =  h^2/(par.pdata.earth.mu*(1-par.Orb_elem0.ecc));      % m
-T = 2*pi*sqrt(par.Orb_elem0.a^3/par.pdata.earth.mu);            % seconds
-
-for i=1:721
-    Alt(i) = norm(ECI(i,1:3));
-end
-minAlt = min(Alt);
-maxAlt = max(Alt);
-dispLine('=');
-disp('<strong>Analytical Elements</strong>')
-dispLine('-');
-disp(['Periapse  [m]       | ', num2str(periapse, '%-12.2f')])
-disp(['Apoapsis  [m]       | ', num2str(apoapse, '%-12.2f')])
-disp(['Orbital period [s]  | ', num2str(T/60, '%-12.2f')])
+AN = anaNoPertu(par);
 
 
 %% Question 1.3: propagated ISS position after 24h
@@ -201,5 +188,5 @@ dispLine('=');
 
 
 %% Comparing
-errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
+errorComparison(par, time, time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 

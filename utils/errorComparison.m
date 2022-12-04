@@ -65,7 +65,8 @@ plot(datetime(time_vec), diff_abs_lla(:,3)); hold on;
 grid on
 ylabel('Altitude error [m]')
 %xlabel('Time')
-legend({'altitude'})
+legend({'altitude'}, 'Location', 'northwest')
+xlabel('Time')
 xtickangle(90);
 xticksCustomDate();
 

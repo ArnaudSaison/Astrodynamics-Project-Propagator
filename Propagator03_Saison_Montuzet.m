@@ -34,6 +34,8 @@ path.S3L = genpath('./S3Lprop_v1_21');
 restoredefaultpath              % restores path
 addpath(path.gator);            % sets path
 
+set(0,'defaultAxesFontSize', 16)
+
 
 %% Parameters
 PARAMETERS_FILE = 'parameters03';
@@ -120,25 +122,15 @@ dispKeplerian(OE.i(end), OE.RAAN(end), OE.ecc(end), OE.omega(end), OE.theta(end)
 dispLine('=');
 
 
+%% Question 3.4: Analytical formulas (m/day)
+AN = anaDragPertu(par, OE.a);
+
+
 %% Question -: Representing orbit
-[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA);
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
 %% Comparing
-errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
-
-
-%% Question 3.4: Analytical formulas (m/day)
-rho_min = (1.558e-12);
-AN.a_dot_min = - (sqrt((par.Orb_elem0.a+10000)*par.pdata.earth.mu)*rho_min*par.prop.A*par.prop.CD/par.prop.MASS)*86400;
-
-rho_max = (7.492e-12);
-AN.a_dot_max = - (sqrt((par.Orb_elem0.a-10000)*par.pdata.earth.mu)*rho_max*par.prop.A*par.prop.CD/par.prop.MASS)*86400;
-
-disp(['<strong>Analytical Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
-dispLine();
-disp(['Semi-major axis variation min [m/day]    | ', num2str(AN.a_dot_min, '%-12.2f')])
-disp(['Semi-major axis variation max [m/day]    | ', num2str(AN.a_dot_max, '%-12.2f')])
-dispLine('=');dispLine('=');
+errorComparison(par, time, time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 
 

@@ -28,6 +28,6 @@ function [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN)
     end
 
     %% plot of the orbital elements
-    fig_ax.OE = plotOE(par, time, time_vec, OE, LLA); % (prints to pdf included)
+    fig_ax.OE = plotOE(par, time, time_vec, OE, LLA, AN); % (prints to pdf included)
     
 end

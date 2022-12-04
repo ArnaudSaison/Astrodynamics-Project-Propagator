@@ -8,6 +8,8 @@ fig_AR = 1.5;
 
 % line style
 line_color = 'red';
+line_color2 = 'blue';
+line_color3 = 'green';
 
 
 %% Inclination variation
@@ -28,7 +30,7 @@ line_color = 'red';
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.i);
 [isCst_temp, middle_temp] = plotConstant(angle_temp, 1e-3);
 figure('Name', 'OE: i', 'WindowStyle', 'docked');
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color)
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('Inclination [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -45,7 +47,11 @@ fig_ax.i = gca;
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.RAAN);
 [isCst_temp, middle_temp] = plotConstant(angle_temp, 1e-3);
 figure('Name', 'OE: RAAN', 'WindowStyle', 'docked');
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color)
+if AN.J2 == 1
+    [time_vec_temp2, angle_temp2] = angleDiscon(time_vec, AN.RAAN_plt); 
+    plot(datetime(time_vec_temp2), angle_temp2, 'Color', line_color2); hold on;
+end
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('RAAN \Omega [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -61,7 +67,7 @@ fig_ax.RAAN = gca;
 %% Eccentricity
 [isCst_temp, middle_temp] = plotConstant(OE.ecc, 1e-3);
 figure('Name', 'OE: ecc', 'WindowStyle', 'docked');
-plot(datetime(time_vec), OE.ecc - middle_temp * isCst_temp, 'Color', line_color)
+plot(datetime(time_vec), OE.ecc - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('Eccentricity [-]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2e')]}); end
@@ -78,7 +84,11 @@ fig_ax.ecc = gca;
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.omega);
 [isCst_temp, middle_temp] = plotConstant(angle_temp, 1e-3);
 figure('Name', 'OE: omega', 'WindowStyle', 'docked');
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color)
+if AN.J2 == 1
+    [time_vec_temp2, angle_temp2] = angleDiscon(time_vec, AN.Omega_plt); 
+    plot(datetime(time_vec_temp2), angle_temp2, 'Color', line_color2); hold on;
+end
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('Argument of perigee \omega [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -86,6 +96,8 @@ xlabel('Time')
 xticksCustomDate();
 ylim([0, 360])
 betterYLim(OE.omega - middle_temp * isCst_temp, 0.1, 0 - isCst_temp * 360, 360);
+
+
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_omega', fig_size, fig_AR, par.PDF_FOLDER)
@@ -96,7 +108,7 @@ fig_ax.omega = gca;
 [time_vec_temp, angle_temp] = angleDiscon(time_vec, OE.theta);
 [isCst_temp, middle_temp] = plotConstant(angle_temp, 1e-3);
 figure('Name', 'OE: theta', 'WindowStyle', 'docked');
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color)
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('True anomaly \theta [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -113,7 +125,15 @@ fig_ax.theta = gca;
 %% Semi major axis
 [isCst_temp, middle_temp] = plotConstant(OE.a /1000, 1e-3);
 figure('Name', 'OE: a', 'WindowStyle', 'docked');
-plot(datetime(time_vec), OE.a /1000 - middle_temp * isCst_temp, 'Color', line_color)
+if AN.DRAG == 1
+    plot(datetime(time_vec), AN.a_min_plt /1000, ...
+         'Color', line_color2, 'DisplayName', 'a_{min}'); hold on;
+    plot(datetime(time_vec), AN.a_max_plt /1000, ...
+         'Color', line_color3, 'DisplayName', 'a_{max}'); hold on;
+    legend();
+end
+plot(datetime(time_vec), OE.a /1000 - middle_temp * isCst_temp, ...
+     'Color', line_color, 'DisplayName', 'a'); hold on;
 xtickangle(90);
 ylabel('Semi-major axis [km]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -128,7 +148,7 @@ fig_ax.a = gca;
 
 %% Altitude
 figure('Name', 'Altitude', 'WindowStyle', 'docked');
-plot(datetime(time_vec), LLA(:,3) /1000, 'Color', line_color)
+plot(datetime(time_vec), LLA(:,3) /1000, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('Altitude [km]')
 xlabel('Time')
