@@ -184,7 +184,7 @@ dispLine('=');
 
 
 %% Question 1.4: Representing orbit
-[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA);
+[fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
 %% Comparing

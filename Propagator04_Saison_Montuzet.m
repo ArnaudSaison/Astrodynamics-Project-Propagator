@@ -145,6 +145,11 @@ dispLine('=');
 
 
 %% Comparing
+par.PDF_FOLDER_OLD = par.PDF_FOLDER;
+par.PDF_FOLDER = [par.PDF_FOLDER_OLD, 'SGP4_'];
 errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, SGP4.ECI, SGP4.LLA);
 
+par.PDF_FOLDER_OLD = par.PDF_FOLDER;
+par.PDF_FOLDER = [par.PDF_FOLDER_OLD, 'S3L_'];
+errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 

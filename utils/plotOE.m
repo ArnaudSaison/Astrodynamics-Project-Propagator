@@ -196,7 +196,7 @@ if AN.DRAG == 1
          'Color', line_color2, 'DisplayName', 'a_{min}'); hold on;
     plot(datetime(time_vec), AN.a_max_plt /1000, ...
          'Color', line_color3, 'DisplayName', 'a_{max}'); hold on;
-    legend();
+    legend('Location', 'west');
 end
 plot(datetime(time_vec), OE.a /1000 - middle_temp * isCst_temp, ...
      'Color', line_color, 'DisplayName', 'a'); hold on;
@@ -205,7 +205,7 @@ ylabel('Semi-major axis [km]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
 xlabel('Time')
 xticksCustomDate();
-betterYLim(OE.a /1000 - middle_temp * isCst_temp, 0.1, par.pdata.earth.radius /1000 - isCst_temp * 2 * par.pdata.earth.radius /1000, 1e20);
+betterYLim(OE.a /1000 - middle_temp * isCst_temp, 0.11, par.pdata.earth.radius /1000 - isCst_temp * 2 * par.pdata.earth.radius /1000, 1e20);
 
 % adding TLEs on plot if available (first one is skipped)
 if isfield(par, 'BULKTLES_FILENAME')
@@ -216,7 +216,8 @@ if isfield(par, 'BULKTLES_FILENAME')
              'Color', marker_color, ...
              'MarkerFaceColor', marker_color, ...
              'LineWidth', 2, ...
-             'LineStyle', 'none'); hold on;
+             'LineStyle', 'none', ...
+             'DisplayName', 'TLE'); hold on;
     end
 end
 
