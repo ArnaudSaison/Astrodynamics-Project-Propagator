@@ -123,7 +123,7 @@ dispLine('=');
 
 
 %% Question 3.4: Analytical formulas (m/day)
-AN = anaDragPertu(par, OE.a);
+AN = anaDragPertu(par, OE.a, LLA(:,3));
 
 
 %% Question -: Representing orbit
@@ -136,7 +136,7 @@ disp('<strong>ECI errors to TLE</strong>')
 dispLine('-');
 for i = 2:length(par.bulkTLEs)
     disp([char(datetime(par.bulkTLEs(i).elem.utc_vec)), ...
-         '   | ', num2str(norm(par.bulkTLEs(i).ECI(1:3) - BULK.ECI(i-1, 1:3))/1000), ' m'])
+         '   | ', num2str(norm(par.bulkTLEs(i).ECI(1:3) - BULK.ECI(i-1, 1:3))/1000, '%.1f'), ' m'])
 end
 dispLine('=');
 

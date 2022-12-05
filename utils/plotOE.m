@@ -228,12 +228,21 @@ fig_ax.a = gca;
 
 %% Altitude
 figure('Name', 'Altitude', 'WindowStyle', 'docked');
-plot(datetime(time_vec), LLA(:,3) /1000, 'Color', line_color); hold on;
+plot(datetime(time_vec), LLA(:,3) /1000, 'Color', line_color, ...
+     'DisplayName', 'Altitude'); hold on;
 xtickangle(90);
 ylabel('Altitude [km]')
 xlabel('Time')
 xticksCustomDate();
 betterYLim(LLA(:,3) /1000, 0.1, 0, 1e20);
+
+if AN.DRAG == 1
+    plot(datetime(time_vec), AN.a_min_plt_alt /1000, ...
+         'Color', line_color2, 'DisplayName', 'a_{min}'); hold on;
+    plot(datetime(time_vec), AN.a_max_plt_alt /1000, ...
+         'Color', line_color3, 'DisplayName', 'a_{max}'); hold on;
+    legend('Location', 'southwest');
+end
 
 if par.PRINT_PDF
     fig2pdf(gcf, 'altitude', fig_size, fig_AR, par.PDF_FOLDER)

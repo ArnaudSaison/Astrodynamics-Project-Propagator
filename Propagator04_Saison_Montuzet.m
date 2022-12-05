@@ -129,7 +129,7 @@ dispLine('=');
 
 
 %% Question -: Representing orbit
-AN.DRAG = 0; AN.J2 = 0;
+AN.DRAG = 0; AN.J2 = 0; % disable all analytical plots
 [fig_ax] = plotOrbit(par, time, time_vec, ECI, ECEF, OE, LLA, AN);
 
 
@@ -139,7 +139,7 @@ disp('<strong>ECI errors to TLE</strong>')
 dispLine('-');
 for i = 2:length(par.bulkTLEs)
     disp([char(datetime(par.bulkTLEs(i).elem.utc_vec)), ...
-         '   | ', num2str(norm(par.bulkTLEs(i).ECI(1:3) - BULK.ECI(i-1, 1:3))/1000), ' m'])
+         '   | ', num2str(norm(par.bulkTLEs(i).ECI(1:3) - BULK.ECI(i-1, 1:3))/1000, '%.1f'), ' m'])
 end
 dispLine('=');
 
@@ -149,7 +149,6 @@ par.PDF_FOLDER_OLD = par.PDF_FOLDER;
 par.PDF_FOLDER = [par.PDF_FOLDER_OLD, 'SGP4_'];
 errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, SGP4.ECI, SGP4.LLA);
 
-par.PDF_FOLDER_OLD = par.PDF_FOLDER;
 par.PDF_FOLDER = [par.PDF_FOLDER_OLD, 'S3L_'];
 errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
 

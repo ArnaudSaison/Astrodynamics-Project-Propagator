@@ -1,4 +1,4 @@
-function AN = anaDragPertu(par, a)
+function AN = anaDragPertu(par, a, altitude)
 %ANADRAGPERTU 
 %
 
@@ -24,6 +24,13 @@ AN.a_max_plt = mean(a) + par.tspan * AN.a_dot_max /86400;
 
 AN.a_min_plt = AN.a_min_plt';
 AN.a_max_plt = AN.a_max_plt';
+
+% plot
+AN.a_min_plt_alt = max(altitude) + par.tspan * AN.a_dot_min /86400;
+AN.a_max_plt_alt = max(altitude) + par.tspan * AN.a_dot_max /86400;
+
+AN.a_min_plt_alt = AN.a_min_plt_alt';
+AN.a_max_plt_alt = AN.a_max_plt_alt';
 
 end
 
