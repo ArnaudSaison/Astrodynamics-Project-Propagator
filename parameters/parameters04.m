@@ -16,6 +16,7 @@ par.ENABLE_DRAG = 1;
 
 % Intial orbit (based on TLE) (/!\ strings must be between '')
 par.BULKTLES_FILENAME = 'bulkHSTTLEs';
+par.SGP4TLE_FILENAME = 'HSTTLE';
 
 % Object properties
 par.prop.MASS = 410500;         % [kg] mass of object

@@ -29,7 +29,7 @@
 clc; close all; clear;          % cleaning up
 
 path.gator = char(join({'./data', './propagator/matlab', './utils', './parameters', './figures'}, ';'));
-path.S3L = genpath('./S3Lprop_v1_21');
+path.S3L = char(join({'./data', genpath('./S3Lprop_v1_21')}, ';'));
 
 restoredefaultpath              % restores path
 addpath(path.gator);            % sets path
@@ -52,7 +52,7 @@ dispParam(par);
 [ECEF, LLA, OE, time_vec] = ECI2ECEF2LLA2OE(ECI, time, par);
 
 
-%% Question 3.2: S3L propagator
+%% Question -: S3L propagator
 restoredefaultpath; % changing path to avoid naming conflicts
 addpath(path.S3L);
 
@@ -104,6 +104,11 @@ warning on;
 S3L.geodetic(:,1:3) = S3L.geodetic(:,flip(1:3)); % S3L uses alt-lat-long which is not standard
 
 
+%% Question -: sgp4
+SGP4.ECI = [];
+[SGP4.ECI(:,1:3), SGP4.ECI(:,4:6)] = sgp4(par.tspan', 'HSTTLE.txt', 1);
+
+
 %% Resetting path
 restoredefaultpath              % restores path
 addpath(path.gator);
@@ -113,8 +118,10 @@ S3L.ECI = S3L.cartesian;
 S3L.time = S3L.t;
 [S3L.ECEF, S3L.LLA, S3L.OE, S3L.time_vec] = ECI2ECEF2LLA2OE(S3L.ECI, S3L.time, par);
 
+[SGP4.ECEF, SGP4.LLA, SGP4.OE, SGP4.time_vec] = ECI2ECEF2LLA2OE(SGP4.ECI, S3L.time, par);
 
-%% Question 3.3: propagated ISS position after 24h
+
+%% Question -: propagated ISS position after 24h
 dispLine('=');
 disp(['<strong>Keplerian Elements after ', num2str(par.T_END /24/3600, '%.2f'), ' day(s) </strong>'])
 dispKeplerian(OE.i(end), OE.RAAN(end), OE.ecc(end), OE.omega(end), OE.theta(end), OE.a(end));
@@ -138,6 +145,6 @@ dispLine('=');
 
 
 %% Comparing
-errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, S3L.ECI, S3L.LLA);
+errorComparison(par, S3L.time, S3L.time_vec, ECI, LLA, SGP4.ECI, SGP4.LLA);
 
 
