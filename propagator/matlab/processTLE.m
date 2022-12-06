@@ -127,7 +127,15 @@ vec = datevec(dt); % [Y,M,D,H,MN,S]
 
 % conversion to date vector
 elem.utc_vec = vec;
-elem.utc_jd = jd;
+elem.utc_jd  = jd;
+
+% if SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        ECI = []; % empty the ECI coords
+        [ECI(:,1:3), ECI(:,4:6)] = tle2eci([par.SGP4TLE_FILENAME, '.txt']);
+    end
+end
 
 
 end

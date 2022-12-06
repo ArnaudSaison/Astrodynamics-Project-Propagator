@@ -28,7 +28,7 @@
 % folder of the project. Doing otherwise will cause naming conflicts.
 clc; close all; clear;          % cleaning up
 
-path.gator = char(join({'./data', './propagator/matlab', './utils', './parameters', './figures'}, ';'));
+path.gator = char(join({'./data', './propagator/matlab', './utils', './parameters', './figures', './S3Lprop_v1_21/tle2eci'}, ';'));
 path.S3L = char(join({'./data', genpath('./S3Lprop_v1_21')}, ';'));
 
 restoredefaultpath              % restores path
@@ -119,6 +119,7 @@ S3L.time = S3L.t;
 [S3L.ECEF, S3L.LLA, S3L.OE, S3L.time_vec] = ECI2ECEF2LLA2OE(S3L.ECI, S3L.time, par);
 
 [SGP4.ECEF, SGP4.LLA, SGP4.OE, SGP4.time_vec] = ECI2ECEF2LLA2OE(SGP4.ECI, S3L.time, par);
+AN.SGP4 = SGP4;
 
 
 %% Question -: propagated ISS position after 24h

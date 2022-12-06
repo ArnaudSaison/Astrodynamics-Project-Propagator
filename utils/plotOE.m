@@ -54,6 +54,14 @@ if isfield(par, 'BULKTLES_FILENAME')
     end
 end
 
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        [time_vec_temp, angle_temp] = angleDiscon(time_vec, AN.SGP4.OE.i);
+        plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
+    end
+end
+
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_i', fig_size, fig_AR, par.PDF_FOLDER)
 end
@@ -67,7 +75,7 @@ if AN.J2 == 1
     [time_vec_temp2, angle_temp2] = angleDiscon(time_vec, AN.RAAN_plt); 
     plot(datetime(time_vec_temp2), angle_temp2, 'Color', line_color2); hold on;
 end
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
 xtickangle(90);
 ylabel('RAAN \Omega [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
@@ -85,6 +93,14 @@ if isfield(par, 'BULKTLES_FILENAME')
              'MarkerFaceColor', marker_color, ...
              'LineWidth', 2, ...
              'LineStyle', 'none'); hold on;
+    end
+end
+
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        [time_vec_temp, angle_temp] = angleDiscon(time_vec, AN.SGP4.OE.RAAN);
+        plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
     end
 end
 
@@ -114,6 +130,13 @@ if isfield(par, 'BULKTLES_FILENAME')
              'MarkerFaceColor', marker_color, ...
              'LineWidth', 2, ...
              'LineStyle', 'none'); hold on;
+    end
+end
+
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        plot(datetime(time_vec), AN.SGP4.OE.ecc - middle_temp * isCst_temp, 'Color', line_color2); hold on;
     end
 end
 
@@ -152,6 +175,14 @@ if isfield(par, 'BULKTLES_FILENAME')
     end
 end
 
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        [time_vec_temp, angle_temp] = angleDiscon(time_vec, AN.SGP4.OE.omega);
+        plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
+    end
+end
+
 if par.PRINT_PDF
     fig2pdf(gcf, 'OE_omega', fig_size, fig_AR, par.PDF_FOLDER)
 end
@@ -180,6 +211,14 @@ if isfield(par, 'BULKTLES_FILENAME')
              'MarkerFaceColor', marker_color, ...
              'LineWidth', 2, ...
              'LineStyle', 'none'); hold on;
+    end
+end
+
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        [time_vec_temp, angle_temp] = angleDiscon(time_vec, AN.SGP4.OE.theta);
+        plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
     end
 end
 
@@ -218,6 +257,13 @@ if isfield(par, 'BULKTLES_FILENAME')
              'LineWidth', 2, ...
              'LineStyle', 'none', ...
              'DisplayName', 'TLE'); hold on;
+    end
+end
+
+% adding SGP4
+if isfield(par, 'SGP4TLE_FILENAME')
+    if par.SGP4_ECI_MODE
+        plot(datetime(time_vec), AN.SGP4.OE.a /1000 - middle_temp * isCst_temp, 'Color', line_color2); hold on;
     end
 end
 
