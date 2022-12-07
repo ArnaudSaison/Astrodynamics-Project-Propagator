@@ -75,7 +75,7 @@ if AN.J2 == 1
     [time_vec_temp2, angle_temp2] = angleDiscon(time_vec, AN.RAAN_plt); 
     plot(datetime(time_vec_temp2), angle_temp2, 'Color', line_color2); hold on;
 end
-plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color2); hold on;
+plot(datetime(time_vec_temp), angle_temp - middle_temp * isCst_temp, 'Color', line_color); hold on;
 xtickangle(90);
 ylabel('RAAN \Omega [deg]')
 if isCst_temp, ylabel({gca().YLabel.String, ['around ', num2str(middle_temp, '%.2f')]}); end
