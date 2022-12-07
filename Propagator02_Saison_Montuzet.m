@@ -21,6 +21,8 @@
 % Academic Year: 2022-2023
 % Course: AERO0024-1 Astrodynamics
 %
+% User guide: Please see README.md
+%
 % =========================================================================
 
 %% Setting up path

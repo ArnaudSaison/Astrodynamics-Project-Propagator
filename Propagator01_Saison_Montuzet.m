@@ -21,67 +21,7 @@
 % Academic Year: 2022-2023
 % Course: AERO0024-1 Astrodynamics
 %
-% -------------------------------------------------------------------------
-% Description: 
-%   "The objective of this project is the development of an orbital
-%   propagator in the Matlab environment. This propagator should provide a
-%   realistic approxi- mation of spacecraft trajectories around the Earth.
-%   Eventually, the predictions of your propagator should be compared
-%   against the real trajectory of a satellite in low Earth orbit."
-% 
-% User Manual: Please see README.md
-%
-% Minimum requirements: 
-%   - Aerospace Toolbox
-% 
-% Structure:
-%   data/
-%       bulkISSTLEs.txt         several ISS TLEs
-%       coast.mat               coast outlines
-%       planetaryData.m         all astronomical data (R_earth, mu, J2, ...)
-%   figures/
-%       ...                     contains all output figures (folder name
-%                               can be changed in parameters file)
-%   propagator/
-%       matlab/
-%           diffEq.m            differential equation
-%           ECI2ECEF2LLA2OE.m   all frame transformations
-%           ECI2kepl.m          calls ijk2keplerian for all time steps
-%           getLatestTLE.m      uses Celestrack API to get latest TLE of
-%                               object
-%           harris_priester.m   calculates the density depending on 
-%                               position and altitude
-%           mean2trueAnomaly.m  converts mean anomaly to true anomaly
-%           processBulkTLEs.m   processes several TLEs in txt file
-%           processParam.m      processes and groups parameters and TLE
-%           processTLE.m        parses and converts text TLE to orbital 
-%                               elements, utc time, and orbital elements
-%           propagator.m        solves the equation of motion with solvers
-%       python/
-%   S3Lprop_v1_21/
-%       ...                     contains all S3L propagator files WARNING:
-%                               FOLDER MUST BE PLACED THERE AND HAVE THIS
-%                               PRECISE NAME
-%   utils/
-%       angleDiscon.m           allows representation between 0 and 360°
-%                               without cutting plot on screen
-%       betterYLim.m            centers data and limits to bounds
-%       dispKeplerian.m         displays keplerian elements in command
-%                               window
-%       dispLine.m              diplays a horizontal line in the command
-%                               window
-%       dispParam.m             displays parameters as output by
-%                               processParam in the command window
-%       errorComparison.m       plots ECI and LLA errors
-%       fig2pdf.m               automatically converts figure to pdf
-%       grdtrk.m                customized ground track function as 
-%                               provided in project statement
-%       plot_3D.m               represents solution in 3D
-%       plotConstant.m          detects if data for a plot is almost cst
-%       plotDayLines.m          plots vertical line at each day
-%       plotOE.m                plots all the orbital elements
-%       plotOrbit.m             plots ground track and altitude
-%       xticksCustomDate.m      plots hours on minor grid
+% User guide: Please see README.md
 % 
 % =========================================================================
 
