@@ -28,8 +28,8 @@ par.prop.n = 2;                 % Harris-Priester value for low inclination orbi
 % Simulation parameters
 par.SOLVER = 'ODE113';          % [str] solver used for propagation can 
                                 %       be: ODE45, ODE78, ODE113
-par.N_STEP = 1*24*60/2;         % [#] number of step in the simulation
-par.T_END = 1*24*3600;          % [s] number of seconds in the simulation
+par.N_STEP = 10*24*60/2;         % [#] number of step in the simulation
+par.T_END = 10*24*3600;          % [s] number of seconds in the simulation
 par.REL_TOL = 1e-10;            % [-] relative tolerance
 par.ABS_TOL = 1e-10;            % [-] absolute tolerance
 

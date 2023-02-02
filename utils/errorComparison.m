@@ -3,7 +3,7 @@ function [fig_ax] = errorComparison(par, time, time_vec, ECI, LLA, ECI2, LLA2)
 %
 
 % figures dimensions
-fig_size = 1.5;
+fig_size = 1.2;
 fig_AR = 1.5;
 
 %% relative difference in ECI

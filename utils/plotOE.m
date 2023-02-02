@@ -3,7 +3,7 @@ function [fig_ax] = plotOE(par, time, time_vec, OE, LLA, AN)
 %   
 
 % figures dimensions
-fig_size = 1.5;
+fig_size = 1.2;
 fig_AR = 1.5;
 
 % line style
